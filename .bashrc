@@ -37,12 +37,13 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/share/bcc/tools
+export PATH=$PATH:/opt/homebrew/bin/
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
-export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line"
+export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
 export GO111MODULE=on
 export PYTHONWARNINGS=ignore
 
