@@ -1,0 +1,31 @@
+[color]
+    ui = true
+[log]
+    decorate = true
+[fetch]
+    prune = true
+[alias]
+    st = status
+    br = branch
+    co = checkout
+    cm = commit
+    sh = show
+    log-oneline = log  --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=short
+    pushfwl = push --force-with-lease
+    delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop|main$' | xargs -I % git branch -d %
+[core]
+    editor = vim -c \"set fenc=utf-8\"
+[diff]
+    algorithm = histogram
+[difftool]
+    prompt = false
+[user]
+    name = Nobuhiro MIKI
+[sendemail]
+    confirm = always
+[format]
+    signoff = true
+[commit]
+    verbose = true
+[include]
+    path = ~/.gitconfig.local
