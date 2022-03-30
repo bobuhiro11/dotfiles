@@ -1,3 +1,16 @@
+function install_for_mac {
+  brew tap homebrew/cask-fonts
+  brew install ripgrep
+  brew install exa
+  brew install bat
+  brew install tmux
+  brew install vim
+  brew install go
+  brew install bash
+  brew install --cask alacritty
+  brew install --cask font-hack-nerd-font
+}
+
 [ -e /usr/local/bin/nvim.appimage ] &&  alias nvim='nvim.appimage -u ~/.vimrc'
 [ -e /usr/bin/colordiff ] && alias diff='colordiff'
 
@@ -7,8 +20,6 @@ alias ll='ls -lah'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-[ -f ~/bin/exa ] && alias ll='exa -lag --time-style long-iso'
 
 export TERM="xterm-256color"
 export HISTFILE=~/.bash_history
@@ -62,6 +73,8 @@ export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
 [ -t 0 ] &&  stty start undef
 
+[ -f $(which exa) ] && alias ll="$(which exa) -lag --time-style long-iso"
+[ -f $(which bat) ] && alias cat="$(which bat) -p --paging=never"
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

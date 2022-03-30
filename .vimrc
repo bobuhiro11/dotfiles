@@ -36,6 +36,7 @@
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin('~/.vim/plugged')
   Plug 'ryanoasis/vim-devicons'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'airblade/vim-gitgutter'
   Plug 'morhetz/gruvbox'
   Plug 'mattn/vim-goimports'
