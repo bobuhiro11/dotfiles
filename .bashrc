@@ -14,17 +14,17 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 export DIRSTACKSIZE=100
 export GOPATH=$HOME/go
-
 export PYENV_ROOT="$HOME/.pyenv"
+
+export PATH="/usr/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/share/bcc/tools:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/bin/:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH=$HOME/bin/:$PATH
-export PATH=$PATH:/usr/local/bin
-export PATH=$PATH:/usr/sbin
-export PATH=$PATH:$HOME/.cargo/bin
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:/usr/share/bcc/tools
-export PATH=$PATH:/opt/homebrew/bin/
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
