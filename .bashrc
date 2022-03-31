@@ -56,6 +56,14 @@ export RESET=$(tput sgr0)
 shopt -u histappend
 shopt -s autocd
 
+export HOSTNAME_SHORT=$(hostname)
+export HOSTNAME_SUFFIX=$(cat /etc/resolv.conf | awk '/domain/ {print $2}')
+if [[ "$HOSTNAME_SUFFIX" != "" ]]; then
+  export HOSTNAME_SHORT=$(echo $HOSTNAME_SHORT | sed -e "s/\.$HOSTNAME_SUFFIX//g")
+fi
+
+export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
+
 [ ! -L "$SSH_AUTH_SOCK" ] && ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
