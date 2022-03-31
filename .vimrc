@@ -88,7 +88,7 @@ set viewoptions-=options
 set background=dark
 set nobackup
 set nowritebackup
-set ambiwidth=double
+set ambiwidth=single
 set backspace=indent,eol,start
 set cinkeys-=0#
 set cmdheight=2
@@ -135,6 +135,8 @@ let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 
 let g:coc_user_config = {}
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
       \ },
