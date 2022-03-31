@@ -1,16 +1,3 @@
-function install_for_mac {
-  brew tap homebrew/cask-fonts
-  brew install ripgrep
-  brew install exa
-  brew install bat
-  brew install tmux
-  brew install vim
-  brew install go
-  brew install bash
-  brew install --cask alacritty
-  brew install --cask font-hack-nerd-font
-}
-
 [ -e /usr/local/bin/nvim.appimage ] &&  alias nvim='nvim.appimage -u ~/.vimrc'
 [ -e /usr/bin/colordiff ] && alias diff='colordiff'
 
