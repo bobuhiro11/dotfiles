@@ -61,7 +61,7 @@ export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
 [ -t 0 ] &&  stty start undef
 
-[ -f $(which exa) ] && alias ll="$(which exa) -lag --time-style long-iso"
+[ -f $(which exa) ] && alias ll="$(which exa) -lag --time-style long-iso --icons"
 [ -f $(which bat) ] && alias cat="$(which bat) -p --paging=never"
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
