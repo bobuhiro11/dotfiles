@@ -37,16 +37,6 @@ export PYTHONWARNINGS=ignore
 export IGNOREEOF=100
 export KEYTIMEOUT=1 # 10ms for key sequences
 
-export LESS='-i -F -R -X' # LESS for git is -FRX, this behavior will not change.
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-export MANPAGER='less'
-
 export EDITOR=vim
 
 export CYAN=$(tput setaf 6)
@@ -70,8 +60,9 @@ export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty start undef
 
 $(which exa >/dev/null 2>&1) && alias ll="$(which exa) -lag --time-style long-iso --icons"
-$(which bat >/dev/null 2>&1) && alias cat="$(which bat) -p --paging=never"
-$(which batcat >/dev/null 2>&1) && alias cat="$(which batcat) -p --paging=never"
+$(which bat >/dev/null 2>&1) && alias cat="$(which bat) -p --paging=never" && alias less="$(which bat) -p" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+$(which batcat >/dev/null 2>&1) && alias cat="$(which batcat) -p --paging=never" && alias less="$(which batcat) -p" && export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
