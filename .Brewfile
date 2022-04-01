@@ -19,3 +19,4 @@ brew "gh"
 
 cask "alacritty"
 cask "font-hack-nerd-font"
+cask "bettertouchtool"
