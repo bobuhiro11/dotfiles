@@ -34,13 +34,13 @@
 " mv ripgrep-13.0.0-x86_64-unknown-linux-musl/rg ~/bin/
 "
 if ! empty(glob('~/.vim/autoload/plug.vim'))
-  call plug#begin('~/.vim/plugged')
+  call plug#begin()
   Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'airblade/vim-gitgutter'
   Plug 'morhetz/gruvbox'
   Plug 'mattn/vim-goimports'
-  if v:version >= 802
+  if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
   Plug 'itchyny/lightline.vim'
@@ -73,7 +73,9 @@ function! RipgrepFzf(query, fullscreen)
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
-if v:version >= 802
+if has('nvim')
+  set signcolumn=number
+elseif v:version >= 802
   set shortmess=cfilnxtToOS
   set completeopt=menuone,noselect,popup
   " set diffopt=internal,filler,algorithm:histogram,indent-heuristic
@@ -108,7 +110,12 @@ set hlsearch
 set ignorecase
 set incsearch
 set keywordprg=:help
-set laststatus=2
+if has('nvim')
+  set laststatus=3
+else
+  set laststatus=2
+end
+set nopaste
 set shellslash
 set shiftwidth=2
 set showmatch
@@ -126,6 +133,7 @@ set spelllang=en,cjk
 set autoread
 set confirm
 set noautochdir
+set guicursor=i:block
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_sizestyle='H'
@@ -146,8 +154,11 @@ let g:lightline = {
       \ }
 let g:tmux_navigator_no_mappings = 1
 "let g:jellybeans_use_term_background_color=1
-let g:fzf_layout = { 'down': '~60%' }
-"let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+if has('nvim')
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+else
+  let g:fzf_layout = { 'down': '~60%' }
+end
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_frontmatter = 1
@@ -215,7 +226,6 @@ command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~/ -ma
 if s:is_plugged('gruvbox')
   colorscheme gruvbox
   let $BAT_THEME='gruvbox-dark'
-  highlight Normal ctermbg=None
 endif
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -257,7 +267,7 @@ augroup MyAutoCmd
   "	hard tab
   "	Zenkaku　Space　
   "	spaces at EOL   
-  autocmd VimEnter,WinEnter,ColorScheme * highlight TAB ctermbg=233 guibg=#282828
+  autocmd VimEnter,WinEnter,ColorScheme * highlight TAB ctermbg=236 guibg=#282828
   autocmd VimEnter,WinEnter,ColorScheme * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme * highlight ZenkakuSpace ctermbg=red guibg=red
   autocmd VimEnter,WinEnter * match WhitespaceEOL /\s\+$/

@@ -1,4 +1,3 @@
-[ -e /usr/local/bin/nvim.appimage ] &&  alias nvim='nvim.appimage -u ~/.vimrc'
 [ -e /usr/bin/colordiff ] && alias diff='colordiff'
 
 alias free='free -w'
@@ -25,6 +24,7 @@ export PATH="$HOME/bin/:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/nvim-linux64/bin:$PATH"
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
@@ -62,6 +62,7 @@ export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 $(which exa >/dev/null 2>&1) && alias ll="$(which exa) -lag --time-style long-iso --icons"
 $(which bat >/dev/null 2>&1) && alias cat="$(which bat) -p --paging=never" && alias less="$(which bat) -p" && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 $(which batcat >/dev/null 2>&1) && alias cat="$(which batcat) -p --paging=never" && alias less="$(which batcat) -p" && export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+$(which nvim >/dev/null 2>&1) && alias vim="$(which nvim)"
 
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
