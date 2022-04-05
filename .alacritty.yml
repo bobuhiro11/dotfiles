@@ -128,3 +128,6 @@ key_bindings:
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
   - { key: Yen,                        chars: "\x5C"                        }
   - { key: Yen,       mods: Alt,       chars: "\xA5"                        }
+  - { key: Minus,     mods: Command,       action: DecreaseFontSize         }
+  - { key: Minus,     mods: Command|Shift, action: IncreaseFontSize         }
+  - { key: Semicolon, mods: Command|Shift, action: IncreaseFontSize         }

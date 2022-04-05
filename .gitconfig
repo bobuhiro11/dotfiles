@@ -27,5 +27,7 @@
     signoff = true
 [commit]
     verbose = true
+[web]
+    browser = open
 [include]
     path = ~/.gitconfig.local
