@@ -17,7 +17,6 @@ brew "tree"
 brew "wget"
 brew "bash-completion"
 brew "gh"
-brew "clipper", restart_service: true
 brew "superbrothers/opener/opener", restart_service: true
 
 cask "alacritty"

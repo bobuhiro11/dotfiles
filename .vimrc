@@ -35,7 +35,6 @@
 "
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin()
-  Plug 'wincent/vim-clipper'
   Plug 'tpope/vim-rhubarb'
   Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -161,7 +160,6 @@ if has('nvim')
 else
   let g:fzf_layout = { 'down': '~60%' }
 end
-let g:ClipperAuto = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_frontmatter = 1
