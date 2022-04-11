@@ -46,7 +46,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   endif
   Plug 'itchyny/lightline.vim'
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'preservim/nerdtree'
+  Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
@@ -55,7 +55,6 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'cespare/vim-toml', {'branch': 'main'}
   Plug 'chase/vim-ansible-yaml'
   Plug 'tpope/vim-fugitive'
-  Plug 'easymotion/vim-easymotion'
   Plug 'vim-jp/vimdoc-ja'
   Plug 'kchmck/vim-coffee-script'
   call plug#end()
