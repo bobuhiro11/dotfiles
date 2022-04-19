@@ -17,6 +17,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 
 export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="/snap/bin:$PATH"
 export PATH="/usr/share/bcc/tools:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
