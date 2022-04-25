@@ -38,6 +38,10 @@ export PYTHONWARNINGS=ignore
 export IGNOREEOF=100
 export KEYTIMEOUT=1 # 10ms for key sequences
 
+# https://docs.openstack.org/kolla-ansible/victoria/admin/tls.html
+# os_cacert is optional for trusted certificates
+export OS_CACERT=/etc/pki/tls/certs/ca-bundle.crt
+
 export EDITOR=vim
 
 export CYAN=$(tput setaf 6)
