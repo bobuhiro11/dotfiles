@@ -279,7 +279,7 @@ augroup MyAutoCmd
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType go         setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
-  autocmd FileType c          setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
+  autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END
