@@ -75,6 +75,14 @@ else
   alias vi="$(which vim)"
 fi
 
+if [ -f $HOME/.goenv/bin/goenv ]; then
+  export GOENV_ROOT="$HOME/.goenv"
+  export PATH="$GOENV_ROOT/bin:$PATH"
+  eval "$(goenv init -)"
+  export PATH="$GOROOT/bin:$PATH"
+  export PATH="$PATH:$GOPATH/bin"
+fi
+
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
