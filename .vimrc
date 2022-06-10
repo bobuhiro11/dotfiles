@@ -99,8 +99,8 @@ set nolist
 set number
 set norelativenumber
 set wildmenu
-set cursorline
-set cursorcolumn
+set nocursorline
+set nocursorcolumn
 set encoding=utf-8
 set expandtab
 set fileencodings=utf8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
@@ -139,6 +139,7 @@ let g:netrw_banner=0
 let g:netrw_sizestyle='H'
 let g:netrw_timefmt='%Y/%m/%d(%a) %H:%M:%S'
 let g:netrw_preview=1
+let g:goimports_show_loclist = 0
 let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 'coc-snippets', 'coc-yaml']
 let g:coc_user_config = {}
 let g:lightline = {
@@ -153,12 +154,6 @@ let g:lightline = {
       \ }
       \ }
 let g:tmux_navigator_no_mappings = 1
-"let g:jellybeans_use_term_background_color=1
-if has('nvim')
-  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-else
-  let g:fzf_layout = { 'down': '~60%' }
-end
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_frontmatter = 1
@@ -198,7 +193,6 @@ nnoremap <silent> <C-j>l :TmuxNavigateRight<cr>
 nnoremap <silent> <C-j>\ :TmuxNavigatePrevious<cr>
 nmap <Leader>c <Plug>(caw:hatpos:toggle)
 vmap <Leader>c <Plug>(caw:hatpos:toggle)
-nnoremap q :copen<CR>
 noremap  <c-c> <esc>
 noremap! <c-c> <esc>
 cnoremap <C-a> <Home>
@@ -274,12 +268,11 @@ augroup MyAutoCmd
   autocmd VimEnter,WinEnter * 2match ZenkakuSpace /　/
   autocmd VimEnter,WinEnter * match TAB /\t/
   autocmd InsertEnter,WinEnter,CursorHold * checktime
-  autocmd QuickfixCmdPost * copen
-  "autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType go         setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
+  autocmd FileType yaml,json  setlocal cursorline cursorcolumn
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END
