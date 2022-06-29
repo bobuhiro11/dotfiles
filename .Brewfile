@@ -22,3 +22,5 @@ brew "superbrothers/opener/opener", restart_service: true
 cask "alacritty"
 cask "font-hack-nerd-font"
 cask "bettertouchtool"
+cask "coteditor"
+cask "alfred"
