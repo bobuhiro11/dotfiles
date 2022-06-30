@@ -57,6 +57,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'tpope/vim-fugitive'
   Plug 'vim-jp/vimdoc-ja'
   Plug 'kchmck/vim-coffee-script'
+  Plug 'tpope/vim-sleuth'
   call plug#end()
 endif
 function s:is_plugged(name)
