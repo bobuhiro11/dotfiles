@@ -83,6 +83,14 @@ if [ -f $HOME/.goenv/bin/goenv ]; then
   export PATH="$PATH:$GOPATH/bin"
 fi
 
+function udev_log {
+  if [[ $# -ne 1 ]]
+  then
+    echo "Usage: $FUNCNAME <interface name>"
+  fi
+  sudo udevadm test $(sudo udevadm info /sys/class/net/$1/ -q path)
+}
+
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
