@@ -33,6 +33,8 @@ export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
 export GO111MODULE=on
+export GOPROXY=https://proxy.golang.org,direct
+export GOSUMDB=off
 export PYTHONWARNINGS=ignore
 
 export IGNOREEOF=100
