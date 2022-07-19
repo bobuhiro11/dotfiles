@@ -167,6 +167,7 @@ let g:asyncomplete_popup_delay = 10
 let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
+let g:fzf_layout = { 'down': '~20%' }
 let g:tmuxcomplete#asyncomplete_source_options = {
       \ 'name':      'tmuxcomplete',
       \ 'whitelist': ['*'],
@@ -185,7 +186,7 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
-nnoremap <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
+nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
 nnoremap <Leader>f :NERDTreeToggle<CR>
 nnoremap <silent> <C-j>h :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j>j :TmuxNavigateDown<cr>
