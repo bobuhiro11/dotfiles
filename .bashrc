@@ -6,6 +6,7 @@ alias ll='ls -lah'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias sudo='sudo '
 
 export TERM="xterm-256color"
 export HISTFILE=~/.bash_history
