@@ -193,6 +193,11 @@ nnoremap <silent> <C-j>j :TmuxNavigateDown<cr>
 nnoremap <silent> <C-j>k :TmuxNavigateUp<cr>
 nnoremap <silent> <C-j>l :TmuxNavigateRight<cr>
 nnoremap <silent> <C-j>\ :TmuxNavigatePrevious<cr>
+inoremap <silent> <c-a> <home>
+inoremap <silent> <c-e> <end>
+inoremap <silent> <c-f> <right>
+inoremap <silent> <c-b> <left>
+inoremap <silent> <c-k> <c-o>D
 nmap <Leader>c <Plug>(caw:hatpos:toggle)
 vmap <Leader>c <Plug>(caw:hatpos:toggle)
 noremap  <c-c> <esc>
