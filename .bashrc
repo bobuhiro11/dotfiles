@@ -7,6 +7,15 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias sudo='sudo '
+alias sriov_summary='grep -r "" \
+  /sys/class/net/*/device/sriov_numvfs \
+  /sys/class/net/*/device/sriov_totalvfs \
+  /sys/class/net/*/phys_port_name \
+  /sys/class/net/*/compat/devlink/lag_port_select_mode \
+  /sys/class/net/*/device/net/*/compat/devlink/steering_mode \
+  2>/dev/null'
+alias hugepage_summary='grep -r "" /sys/devices/system/node/node*/hugepages/hugepages-*/*_hugepages'
+alias meminfo_by_node="paste /sys/devices/system/node/node*/meminfo | sed -e 's/Node [0-9]\|kB//g'  | column -t | sed -e 's/ [a-zA-Z()_]*: //g' | column -t"
 
 export TERM="xterm-256color"
 export HISTFILE=~/.bash_history
