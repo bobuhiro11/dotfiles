@@ -211,6 +211,7 @@ nnoremap <S-Tab> <<
 inoremap <S-Tab> <C-d>
 nnoremap n /<CR>
 nnoremap N ?<CR>
+map q <nop>
 nmap s <Plug>(easymotion-overwin-f2)
 syntax enable
 filetype plugin indent on
