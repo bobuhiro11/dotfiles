@@ -24,6 +24,7 @@ export SAVEHIST=100000
 export DIRSTACKSIZE=100
 export GOPATH=$HOME/go
 export PYENV_ROOT="$HOME/.pyenv"
+export PKG_CONFIG_PATH="/usr/lib64/pkgconfig/:$PKG_CONFIG_PATH"
 
 export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
