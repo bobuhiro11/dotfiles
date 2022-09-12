@@ -15,6 +15,7 @@
     delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop|main$' | xargs -I % git branch -d %
 [core]
     editor = vim -c \"set fenc=utf-8\"
+    autocrlf = false
 [diff]
     algorithm = histogram
 [difftool]
