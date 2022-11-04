@@ -26,6 +26,7 @@
     confirm = always
 [format]
     signoff = true
+    pretty = medium
 [commit]
     verbose = true
 [web]
