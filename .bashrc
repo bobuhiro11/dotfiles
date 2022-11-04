@@ -17,6 +17,7 @@ alias sriov_summary='grep -r "" \
 alias hugepage_summary='grep -r "" /sys/devices/system/node/node*/hugepages/hugepages-*/*_hugepages'
 alias meminfo_by_node="paste /sys/devices/system/node/node*/meminfo | sed -e 's/Node [0-9]\|kB//g'  | column -t | sed -e 's/ [a-zA-Z()_]*: //g' | column -t"
 alias ovs_get_other_config='ovs-vsctl get Open_vSwitch . other_config'
+alias lscpu_ext='lscpu --extended=NODE,CORE,CPU'
 
 export TERM="xterm-256color"
 export HISTFILE=~/.bash_history
