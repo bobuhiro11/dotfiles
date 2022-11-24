@@ -1,0 +1,13 @@
+#!/bin/bash
+# refs https://gist.github.com/stefansundin/d465f1e331fc5c632088#file-pre-push-3
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+if [[ "$BRANCH" =~ ^(master|main)$ ]]; then
+  echo "Prevented push to $BRANCH."
+  echo "If you really want to do this, use --no-verify to bypass this pre-push hook."
+
+  exit 1
+fi
+
+exit 0

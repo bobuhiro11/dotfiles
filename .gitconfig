@@ -16,6 +16,7 @@
 [core]
     editor = vim -c \"set fenc=utf-8\"
     autocrlf = false
+    hooksPath = ~/.githooks
 [diff]
     algorithm = histogram
 [difftool]
