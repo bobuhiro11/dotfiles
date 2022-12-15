@@ -1,7 +1,8 @@
 window:
   opacity: 1.0
+  decorations: full
 font:
-  size: 12
+  size: 14
   normal:
     family: 'Hack Nerd Font Mono'
     style: Regular
@@ -51,6 +52,7 @@ colors:
     white:   '#ebdbb2'
 key_bindings:
   # meta
+  # https://github.com/alacritty/alacritty/issues/62#issuecomment-347552058
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }
   - { key: B,         mods: Alt,       chars: "\x1bb"                       }
   - { key: C,         mods: Alt,       chars: "\x1bc"                       }
@@ -131,3 +133,7 @@ key_bindings:
   - { key: Minus,     mods: Command,       action: DecreaseFontSize         }
   - { key: Minus,     mods: Command|Shift, action: IncreaseFontSize         }
   - { key: Semicolon, mods: Command|Shift, action: IncreaseFontSize         }
+  # https://qiita.com/cyrt/items/b3415e892aedf5b21925
+  # https://ttssh2.osdn.jp/manual/4/en/macro/appendixes/ascii.html
+  - { key: "LBracket",       mods: Control,   chars: "\x1b" } # Ctrl + [
+  - { key: "RBracket",       mods: Control,   chars: "\x1d" } # Ctrl + ]

@@ -6,7 +6,7 @@ alias ll='ls -lah'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias sudo='sudo '
+alias sudo='sudo -E '
 alias sriov_summary='grep -r "" \
   /sys/class/net/*/device/sriov_numvfs \
   /sys/class/net/*/device/sriov_totalvfs \

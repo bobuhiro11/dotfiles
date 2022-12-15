@@ -18,10 +18,15 @@ brew "wget"
 brew "bash-completion"
 brew "gh"
 brew "superbrothers/opener/opener", restart_service: true
+brew "reattach-to-user-namespace"
+brew "git-review"
 
+# https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
+# Pinned to v0.10.1.
 cask "alacritty"
 cask "font-hack-nerd-font"
 cask "bettertouchtool"
 cask "coteditor"
 cask "alfred"
 cask "1password-cli"
+cask "thunderbird"

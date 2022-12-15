@@ -84,6 +84,7 @@ elseif v:version >= 802
 elseif v:version >= 800
   set completeopt=menuone,noselect
 end
+set termguicolors
 set noshowmode
 set helplang=ja
 set ttimeoutlen=0
