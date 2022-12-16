@@ -20,6 +20,8 @@ brew "gh"
 brew "superbrothers/opener/opener", restart_service: true
 brew "reattach-to-user-namespace"
 brew "git-review"
+brew "node"
+brew "vivid"
 
 # https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
 # Pinned to v0.10.1.
@@ -30,3 +32,5 @@ cask "coteditor"
 cask "alfred"
 cask "1password-cli"
 cask "thunderbird"
+cask "grammarly"
+cask "drawio"
