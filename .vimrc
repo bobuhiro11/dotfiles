@@ -268,16 +268,15 @@ endif
 
 augroup MyAutoCmd
   autocmd!
-  "	hard tab
-  "	Zenkaku　Space　
-  "	spaces at EOL  
-  "	hard tab at EOL	
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=236 guibg=#282828
+  "	hard	tab	
+  "　Zenkaku　Space　
+  " spaces at EOL 
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#343434
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * match WhitespaceEOL /\s\+$/
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * 2match ZenkakuSpace /　/
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * match TAB /\t/
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('ZenkakuSpace', '　')
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('TAB', '\t')
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('WhitespaceEOL', '\s\+$')
   autocmd InsertEnter,WinEnter,CursorHold * checktime
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
