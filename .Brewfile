@@ -22,6 +22,8 @@ brew "reattach-to-user-namespace"
 brew "git-review"
 brew "node"
 brew "vivid"
+brew "nvim"
+brew "ncurses"
 
 # https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
 # Pinned to v0.10.1.
@@ -34,3 +36,5 @@ cask "1password-cli"
 cask "thunderbird"
 cask "grammarly"
 cask "drawio"
+cask "google-chrome"
+cask "slack"
