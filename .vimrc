@@ -84,6 +84,12 @@ elseif v:version >= 802
 elseif v:version >= 800
   set completeopt=menuone,noselect
 end
+" For true color support
+" https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
 set termguicolors
 set noshowmode
 set helplang=ja
@@ -264,13 +270,14 @@ augroup MyAutoCmd
   autocmd!
   "	hard tab
   "	Zenkaku　Space　
-  "	spaces at EOL   
-  autocmd VimEnter,WinEnter,ColorScheme * highlight TAB ctermbg=236 guibg=#282828
-  autocmd VimEnter,WinEnter,ColorScheme * highlight WhitespaceEOL ctermbg=red guibg=red
-  autocmd VimEnter,WinEnter,ColorScheme * highlight ZenkakuSpace ctermbg=red guibg=red
-  autocmd VimEnter,WinEnter * match WhitespaceEOL /\s\+$/
-  autocmd VimEnter,WinEnter * 2match ZenkakuSpace /　/
-  autocmd VimEnter,WinEnter * match TAB /\t/
+  "	spaces at EOL  
+  "	hard tab at EOL	
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=236 guibg=#282828
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * match WhitespaceEOL /\s\+$/
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * 2match ZenkakuSpace /　/
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * match TAB /\t/
   autocmd InsertEnter,WinEnter,CursorHold * checktime
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab

@@ -19,7 +19,6 @@ alias meminfo_by_node="paste /sys/devices/system/node/node*/meminfo | sed -e 's/
 alias ovs_get_other_config='ovs-vsctl get Open_vSwitch . other_config'
 alias lscpu_ext='lscpu --extended=NODE,CORE,CPU'
 
-export TERM="xterm-256color"
 export HISTFILE=~/.bash_history
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -110,3 +109,12 @@ function udev_log {
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
+
+function checkhealth {
+  echo -e "\e[1mbold\e[0m"
+  echo -e "\e[3mitalic\e[0m"
+  echo -e "\e[3m\e[1mbold italic\e[0m"
+  echo -e "\e[4munderline\e[0m"
+  echo -e "\e[9mstrikethrough\e[0m"
+  curl -s https://gist.githubusercontent.com/lifepillar/09a44b8cf0f9397465614e622979107f/raw/24-bit-color.sh | bash
+}
