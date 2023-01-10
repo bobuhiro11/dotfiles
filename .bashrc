@@ -78,17 +78,6 @@ export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
 [ -t 0 ] &&  stty start undef
 
-$(which exa >/dev/null 2>&1) \
-  && alias ll="$(which exa) -lag --time-style long-iso --icons"
-$(which bat >/dev/null 2>&1) \
-  && alias cat="$(which bat) -p --theme=gruvbox-dark --paging=never" \
-  && alias less="$(which bat) -p --theme=gruvbox-dark" \
-  && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-$(which batcat >/dev/null 2>&1) \
-  && alias cat="$(which batcat) -p --theme=gruvbox-dark --paging=never" \
-  && alias less="$(which batcat) -p --theme=gruvbox-dark" \
-  && export MANPAGER="sh -c 'col -bx | batcat -l man -p --theme=gruvbox-dark'"
-
 if [ -f $HOME/.goenv/bin/goenv ]; then
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
@@ -107,6 +96,7 @@ function udev_log {
 
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
+[ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
 
