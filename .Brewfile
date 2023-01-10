@@ -24,6 +24,7 @@ brew "node"
 brew "vivid"
 brew "nvim"
 brew "ncurses"
+brew "ipmitool"
 
 # https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
 # Pinned to v0.10.1.
