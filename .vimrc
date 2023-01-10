@@ -65,7 +65,7 @@ function s:is_plugged(name)
 endfunction
 function! RipgrepFzf(query, fullscreen)
   if executable('rg')
-    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case %s || true'
+    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case  --colors "match:fg:217,167,88" --colors "path:fg:235,106,99" --colors "line:fg:170,183,102" %s || true'
   else
     let l:command_fmt = 'grep -irnIH --max-count=100 --exclude-dir=.svn --exclude-dir=.git --exclude=tags --exclude=tags.lock --exclude-dir=vendor %s ./ || true'
   endif
@@ -136,7 +136,7 @@ set whichwrap=b,s,h,l,<,>,[,]
 set virtualedit=block
 set nostartofline
 set noswapfile
-set spell
+set nospell
 set spelllang=en,cjk
 set autoread
 set confirm
@@ -233,8 +233,9 @@ scriptencoding utf-8
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~/ -maxdepth 5 -type d', 'sink': 'cd'}))
 if s:is_plugged('gruvbox')
-  colorscheme gruvbox
   let $BAT_THEME='gruvbox-dark'
+  let g:gruvbox_italic=1
+  colorscheme gruvbox
 endif
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -277,12 +278,15 @@ augroup MyAutoCmd
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('ZenkakuSpace', '　')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('TAB', '\t')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('WhitespaceEOL', '\s\+$')
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('Todo', '\(TODO\|NOTE\|XXX\|FIXME\):')
   autocmd InsertEnter,WinEnter,CursorHold * checktime
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType go         setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
+  autocmd FileType rst,mail   setlocal colorcolumn=79
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
+  autocmd BufWritePre *.go silent call CocAction('format') | silent call CocAction('runCommand', 'editor.action.organizeImport')
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END
