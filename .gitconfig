@@ -13,10 +13,13 @@
     log-oneline = log  --pretty='format:%C(yellow)%h %C(green)%cd %C(reset)%s %C(red)%d %C(cyan)[%an]' --date=short
     pushfwl = push --force-with-lease
     delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop|main$' | xargs -I % git branch -d %
+    # https://gist.github.com/piscisaureus/3342247
+    # https://gist.github.com/gnarf/5406589
+    pr = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 [core]
     editor = vim -c \"set fenc=utf-8\"
     autocrlf = false
-    hooksPath = ~/.githooks
 [diff]
     algorithm = histogram
 [difftool]
@@ -36,3 +39,5 @@
     path = ~/.gitconfig.local
 [rebase]
 	autosquash = true
+[init]
+    templatedir = ~/.git-template

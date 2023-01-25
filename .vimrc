@@ -4,6 +4,7 @@
 " - Remove unnecessary plugins.
 " - Remove plugins for specific languages
 " - Don't use neovim
+" - Don't block user actions
 "
 " Vim:
 " git clone https://github.com/vim/vim.git && cd vim
@@ -35,29 +36,35 @@
 "
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin()
-  Plug 'tpope/vim-rhubarb'
+  " disable the commit below to regex in g:github_enterprise_urls:
+  "   https://github.com/tpope/vim-rhubarb/commit/b4aad6d
+  "   https://github.com/tpope/vim-rhubarb/issues/67
+  Plug 'tpope/vim-rhubarb', {'commit': 'b4aad6d~'}
   Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'airblade/vim-gitgutter'
   Plug 'morhetz/gruvbox'
-  Plug 'mattn/vim-goimports'
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
-  Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
-  Plug 'tyru/caw.vim'
   Plug 'cespare/vim-toml', {'branch': 'main'}
   Plug 'chase/vim-ansible-yaml'
   Plug 'tpope/vim-fugitive'
   Plug 'vim-jp/vimdoc-ja'
   Plug 'kchmck/vim-coffee-script'
   Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-unimpaired'
   call plug#end()
 endif
 function s:is_plugged(name)
@@ -142,25 +149,23 @@ set autoread
 set confirm
 set noautochdir
 set guicursor=i:block
+let g:github_enterprise_urls = ['[-_\.a-zA-Z0-9]\+']
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_sizestyle='H'
 let g:netrw_timefmt='%Y/%m/%d(%a) %H:%M:%S'
 let g:netrw_preview=1
-let g:goimports_show_loclist = 0
 let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 'coc-snippets', 'coc-yaml']
 let g:coc_user_config = {}
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ]
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'relativepath' ] ],
-      \ }
-      \ }
+let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
+let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline_powerline_fonts = 1
+let g:airline_theme='gruvbox'
+let g:airline_section_z = airline#section#create_right(['colnr'])
 let g:tmux_navigator_no_mappings = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -175,6 +180,7 @@ let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:fzf_layout = { 'down': '~20%' }
+let $FZF_DEFAULT_OPTS = '--bind ctrl-q:select-all+accept'
 let g:tmuxcomplete#asyncomplete_source_options = {
       \ 'name':      'tmuxcomplete',
       \ 'whitelist': ['*'],
@@ -205,8 +211,8 @@ inoremap <silent> <c-e> <end>
 inoremap <silent> <c-f> <right>
 inoremap <silent> <c-b> <left>
 inoremap <silent> <c-k> <c-o>D
-nmap <Leader>c <Plug>(caw:hatpos:toggle)
-vmap <Leader>c <Plug>(caw:hatpos:toggle)
+nmap <Leader>c <Plug>CommentaryLine
+xmap <Leader>c <Plug>Commentary
 noremap  <c-c> <esc>
 noremap! <c-c> <esc>
 cnoremap <C-a> <Home>
@@ -263,8 +269,9 @@ if s:is_plugged('coc.nvim')
   inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
   nmap <silent>gd <Plug>(coc-definition)
   nmap <leader>rn <Plug>(coc-rename)
-  command! -nargs=0 Format :call CocAction('format')
-  command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+  " https://github.com/neoclide/coc.nvim/issues/4372#issuecomment-1320880794
+  command! -nargs=0 Format :call CocActionAsync('format')
+  command! -nargs=0 OR :call CocActionAsync('organizeImport')
 endif
 
 augroup MyAutoCmd
@@ -286,7 +293,6 @@ augroup MyAutoCmd
   autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
   autocmd FileType rst,mail   setlocal colorcolumn=79
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
-  autocmd BufWritePre *.go silent call CocAction('format') | silent call CocAction('runCommand', 'editor.action.organizeImport')
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END

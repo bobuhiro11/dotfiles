@@ -25,6 +25,9 @@ brew "vivid"
 brew "nvim"
 brew "ncurses"
 brew "ipmitool"
+brew "pnpm"
+brew "grammarly-languageserver"
+brew "vint"
 
 # https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
 # Pinned to v0.10.1.
@@ -39,3 +42,5 @@ cask "grammarly"
 cask "drawio"
 cask "google-chrome"
 cask "slack"
+cask "font-jetbrains-mono"
+cask "font-fira-code"

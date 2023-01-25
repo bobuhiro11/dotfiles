@@ -18,6 +18,9 @@ alias hugepage_summary='grep -r "" /sys/devices/system/node/node*/hugepages/huge
 alias meminfo_by_node="paste /sys/devices/system/node/node*/meminfo | sed -e 's/Node [0-9]\|kB//g'  | column -t | sed -e 's/ [a-zA-Z()_]*: //g' | column -t"
 alias ovs_get_other_config='ovs-vsctl get Open_vSwitch . other_config'
 alias lscpu_ext='lscpu --extended=NODE,CORE,CPU'
+alias grep='grep --color=auto'
+# https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
+alias ssh='TERM=xterm-256color ssh'
 
 export HISTFILE=~/.bash_history
 export HISTSIZE=100000
