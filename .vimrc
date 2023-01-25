@@ -36,35 +36,35 @@
 "
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin()
-  " disable the commit below to regex in g:github_enterprise_urls:
-  "   https://github.com/tpope/vim-rhubarb/commit/b4aad6d
-  "   https://github.com/tpope/vim-rhubarb/issues/67
-  Plug 'tpope/vim-rhubarb', {'commit': 'b4aad6d~'}
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
+  Plug 'cespare/vim-toml', {'branch': 'main'}
+  Plug 'chase/vim-ansible-yaml'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'kchmck/vim-coffee-script'
   Plug 'morhetz/gruvbox'
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'christoomey/vim-tmux-navigator'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-  Plug 'junegunn/vim-easy-align'
-  Plug 'cespare/vim-toml', {'branch': 'main'}
-  Plug 'chase/vim-ansible-yaml'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
-  Plug 'vim-jp/vimdoc-ja'
-  Plug 'kchmck/vim-coffee-script'
+  Plug 'tpope/vim-repeat'
+  " disable the commit below to regex in g:github_enterprise_urls:
+  "   https://github.com/tpope/vim-rhubarb/commit/b4aad6d
+  "   https://github.com/tpope/vim-rhubarb/issues/67
+  Plug 'tpope/vim-rhubarb', {'commit': 'b4aad6d~'}
   Plug 'tpope/vim-sleuth'
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-unimpaired'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'vim-jp/vimdoc-ja'
   call plug#end()
 endif
 function s:is_plugged(name)
