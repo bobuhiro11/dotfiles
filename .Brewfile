@@ -28,6 +28,7 @@ brew "ipmitool"
 brew "pnpm"
 brew "grammarly-languageserver"
 brew "vint"
+brew "hugo"
 
 # https://github.com/alacritty/alacritty/issues/62#issuecomment-1345355742
 # Pinned to v0.10.1.
