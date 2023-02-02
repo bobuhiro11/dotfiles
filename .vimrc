@@ -97,7 +97,6 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
-set termguicolors
 set noshowmode
 set helplang=ja
 set ttimeoutlen=0
@@ -159,13 +158,15 @@ let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 
 let g:coc_user_config = {}
 let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
-let g:airline#extensions#coc#enabled = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
-let g:airline_section_z = airline#section#create_right(['colnr'])
+if s:is_plugged('vim-airline')
+  let g:airline#extensions#coc#enabled = 1
+  let g:airline#extensions#whitespace#enabled = 0
+  let g:airline#extensions#branch#enabled = 0
+  let g:airline#extensions#wordcount#enabled = 0
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme='gruvbox'
+  let g:airline_section_z = airline#section#create_right(['colnr'])
+endif
 let g:tmux_navigator_no_mappings = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -242,6 +243,7 @@ if s:is_plugged('gruvbox')
   let $BAT_THEME='gruvbox-dark'
   let g:gruvbox_italic=1
   colorscheme gruvbox
+  set termguicolors
 endif
 function! CheckBackspace() abort
   let col = col('.') - 1
