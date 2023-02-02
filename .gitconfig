@@ -17,9 +17,11 @@
     # https://gist.github.com/gnarf/5406589
     pr = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    fixes = log -1 --pretty=fixes
 [core]
     editor = vim -c \"set fenc=utf-8\"
     autocrlf = false
+    abbrev = 12
 [diff]
     algorithm = histogram
 [difftool]
@@ -38,6 +40,10 @@
 [include]
     path = ~/.gitconfig.local
 [rebase]
-	autosquash = true
+    autosquash = true
 [init]
     templatedir = ~/.git-template
+[pretty]
+    # https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+    # e.g. git log -1 --pretty=fixes 3b4a73b7d9c8
+    fixes = Fixes: %h (\"%s\")
