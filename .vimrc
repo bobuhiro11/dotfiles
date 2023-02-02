@@ -93,9 +93,11 @@ elseif v:version >= 800
 end
 " For true color support
 " https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6
-if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\|xterm\)'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  let &t_ZH = "\e[3m"
+  let &t_ZR = "\e[23m"
 endif
 set noshowmode
 set helplang=ja
@@ -154,7 +156,7 @@ let g:netrw_banner=0
 let g:netrw_sizestyle='H'
 let g:netrw_timefmt='%Y/%m/%d(%a) %H:%M:%S'
 let g:netrw_preview=1
-let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 'coc-snippets', 'coc-yaml']
+let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 'coc-snippets', 'coc-yaml', 'coc-rust-analyzer']
 let g:coc_user_config = {}
 let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
