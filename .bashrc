@@ -51,6 +51,7 @@ export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
 export GOSUMDB=off
 export PYTHONWARNINGS=ignore
+export DPDK_GETMAINTAINER_PATH=$HOME/linux/scripts/get_maintainer.pl
 
 export IGNOREEOF=100
 export KEYTIMEOUT=1 # 10ms for key sequences
