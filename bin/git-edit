@@ -1,0 +1,5 @@
+#!/bin/bash
+commit="$(git rev-list -n 1 "$1")"
+
+GIT_SEQUENCE_EDITOR="perl -pi -e 's/^pick/edit/ if \$. == 1'" \
+  git rebase --interactive "$commit^"
