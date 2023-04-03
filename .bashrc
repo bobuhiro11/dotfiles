@@ -21,6 +21,8 @@ alias lscpu_ext='lscpu --extended=NODE,CORE,CPU'
 alias grep='grep --color=auto'
 # https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
 alias ssh='TERM=xterm-256color ssh'
+alias date='date "+%Y/%m/%d %H:%M:%S %Z" '
+[[ "$(uname -s)" == "Linux" ]] && alias uptime_date='date -d "`cut -f1 -d. /proc/uptime` seconds ago" '
 
 export HISTFILE=~/.bash_history
 export HISTSIZE=100000
