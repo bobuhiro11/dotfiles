@@ -82,12 +82,12 @@ function! RipgrepFzf(query, fullscreen)
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 if has('nvim')
-  set signcolumn=number
+  set signcolumn=yes
 elseif v:version >= 802
   set shortmess=cfilnxtToOS
   set completeopt=menuone,noselect,popup
   " set diffopt=internal,filler,algorithm:histogram,indent-heuristic
-  set signcolumn=number
+  set signcolumn=yes
 elseif v:version >= 800
   set completeopt=menuone,noselect
 end
@@ -286,6 +286,7 @@ augroup MyAutoCmd
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#343434
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight! link SignColumn LineNr
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('ZenkakuSpace', '　')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('TAB', '\t')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('WhitespaceEOL', '\s\+$')
