@@ -17,7 +17,6 @@ font:
   bold_italic:
     family: 'Hack Nerd Font Mono'
     style: Bold Italic
-  use_thin_strokes: true
   offset:
     x: 0
     y: 0
