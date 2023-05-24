@@ -19,11 +19,12 @@
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
     fixes = log -1 --pretty=fixes
 [core]
-    editor = vim -c \"set fenc=utf-8\"
+    editor = nvim -c \"set fenc=utf-8\"
     autocrlf = false
     abbrev = 12
 [diff]
     algorithm = histogram
+    tool = nvimdiff
 [difftool]
     prompt = false
     trustExitCode = true
