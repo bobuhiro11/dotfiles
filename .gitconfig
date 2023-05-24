@@ -15,7 +15,7 @@
     delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop|main$' | xargs -I % git branch -d %
     # https://gist.github.com/piscisaureus/3342247
     # https://gist.github.com/gnarf/5406589
-    pr = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    pr = "!f() { git fetch --all; git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
     fixes = log -1 --pretty=fixes
 [core]
@@ -26,6 +26,7 @@
     algorithm = histogram
 [difftool]
     prompt = false
+    trustExitCode = true
 [user]
     name = Nobuhiro MIKI
 [sendemail]
