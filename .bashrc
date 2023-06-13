@@ -100,6 +100,22 @@ function udev_log {
   sudo udevadm test $(sudo udevadm info /sys/class/net/$1/ -q path)
 }
 
+function build_centos7_qcow2 {
+  if [ ! -e centos7.qcow2 ]; then
+    curl -o centos7.qcow2.xz \
+      https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-20150628_01.qcow2.xz
+    xz -d centos7.qcow2.xz
+  fi
+
+  sudo virt-customize -a ./centos7.qcow2 --root-password password:root --uninstall cloud-init
+  sudo virt-customize -a ./centos7.qcow2 --install epel-release
+  sudo virt-customize -a ./centos7.qcow2 --run-command "sed -i /etc/yum.repos.d/epel.repo -e 's/^#//g'; sed -i /etc/yum.repos.d/epel.repo -e 's/meta.*/#&/'"
+  sudo virt-customize -a ./centos7.qcow2 --run-command "yum install -y iperf --enablerepo=epel"
+
+  # Login using root:root.
+  sudo qemu-system-x86_64 --enable-kvm -m 1024 -hda ./centos7.qcow2 -cpu kvm64 -nographic
+}
+
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
