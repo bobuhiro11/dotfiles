@@ -45,6 +45,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
   Plug 'kchmck/vim-coffee-script'
+  Plug 'lambdalisue/suda.vim'
   Plug 'morhetz/gruvbox'
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -169,6 +170,7 @@ if s:is_plugged('vim-airline')
   let g:airline_theme='gruvbox'
   let g:airline_section_z = airline#section#create_right(['colnr'])
 endif
+let g:suda_smart_edit = 1
 let g:tmux_navigator_no_mappings = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
