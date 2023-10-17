@@ -66,6 +66,8 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-jp/vimdoc-ja'
+  Plug 'github/copilot.vim'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   call plug#end()
 endif
 function s:is_plugged(name)
@@ -171,6 +173,7 @@ if s:is_plugged('vim-airline')
   let g:airline_section_z = airline#section#create_right(['colnr'])
 endif
 let g:suda_smart_edit = 1
+let g:mkdp_echo_preview_url = 1
 let g:tmux_navigator_no_mappings = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -298,7 +301,7 @@ augroup MyAutoCmd
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType go         setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
-  autocmd FileType rst,mail   setlocal colorcolumn=79
+  autocmd FileType rst,mail,yaml,markdown   setlocal colorcolumn=79
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
