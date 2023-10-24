@@ -105,21 +105,27 @@ require('packer').startup(function(use)
   }
   use {
     'numToStr/Navigator.nvim',
-    setup = function ()
+    config = function ()
+      require('Navigator').setup({})
+
       local opts = { noremap = true, silent = true }
       vim.keymap.set('n', "<C-j>h", "<CMD>lua require('Navigator').left()<CR>", opts)
       vim.keymap.set('n', "<C-j>j", "<CMD>lua require('Navigator').down()<CR>", opts)
       vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
       vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
-    end,
-    config = function ()
-      require('Navigator').setup({})
     end
   }
   use 'preservim/nerdtree'
   use 'ryanoasis/vim-devicons'
   use 'tiagofumo/vim-nerdtree-syntax-highlight'
-  use 'tpope/vim-commentary'
+  use {
+    'tpope/vim-commentary',
+    config = function ()
+      local opts = { noremap = true, silent = true }
+      vim.keymap.set("n", "<leader>c", "<Plug>CommentaryLine")
+      vim.keymap.set("x", "<leader>c", "<Plug>Commentary")
+    end,
+  }
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
   use 'tpope/vim-sleuth'
@@ -284,17 +290,13 @@ vim.opt.cmdheight = 1
 vim.opt.relativenumber = false
 
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>c", "<Plug>CommentaryLine")
-vim.keymap.set("x", "<leader>c", "<Plug>Commentary")
 vim.keymap.set('c', '<c-k>', '<c-e><c-u>', opts)
 vim.keymap.set('i', '<M-b>', '<C-o>B', opts)
 vim.keymap.set('i', '<M-f>', '<C-o>W', opts)
 vim.keymap.set('i', '<S-Tab>', '<c-d>', opts)
 vim.keymap.set('i', '<c-k>', '<c-o>D', opts)
 vim.keymap.set('n', '<S-Tab>', '<<', opts)
-vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', 'N', '?<CR>', opts)
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 vim.keymap.set('n', 'n', '/<CR>', opts)
 vim.keymap.set('n', 'q', '<nop>')
 vim.keymap.set({'i', 'c'}, '<c-a>', '<home>', opts)
@@ -302,6 +304,8 @@ vim.keymap.set({'i', 'c'}, '<c-b>', '<left>', opts)
 vim.keymap.set({'i', 'c'}, '<c-e>', '<end>', opts)
 vim.keymap.set({'i', 'c'}, '<c-f>', '<right>', opts)
 vim.keymap.set({'n', 'i', 'v', 'c'}, '<c-c>', '<esc>', opts)
+vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format() end, {})
 vim.api.nvim_create_user_command('Rename', function() vim.lsp.buf.rename() end, {})
 
