@@ -172,7 +172,17 @@ require('packer').startup(function(use)
       }
     end
   }
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = function ()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed={"c", "lua", "go", "python", "ruby", "rust"},
+        sync_install=false,
+        auto_install = true,
+      }
+    end
+  }
   use {'projekt0n/github-nvim-theme', tag = 'v0.0.7'}
   use {
     'sindrets/diffview.nvim',
@@ -296,11 +306,6 @@ vim.api.nvim_create_autocmd({"VimEnter", "WinEnter", "ColorScheme", "Syntax"}, {
   end
 })
 
-require("nvim-treesitter.configs").setup {
-  ensure_installed={"c", "lua", "go", "python", "ruby", "rust"},
-  sync_install=false,
-  auto_install = true,
-}
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
