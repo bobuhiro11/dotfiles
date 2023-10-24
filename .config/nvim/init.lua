@@ -36,6 +36,7 @@ require('packer').startup(function(use)
   }
   use {
     "williamboman/mason-lspconfig.nvim",
+    after = "mason.nvim",
     config = function ()
       require("mason-lspconfig").setup({
         ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
@@ -104,6 +105,13 @@ require('packer').startup(function(use)
   }
   use {
     'numToStr/Navigator.nvim',
+    setup = function ()
+      local opts = { noremap = true, silent = true }
+      vim.keymap.set('n', "<C-j>h", "<CMD>lua require('Navigator').left()<CR>", opts)
+      vim.keymap.set('n', "<C-j>j", "<CMD>lua require('Navigator').down()<CR>", opts)
+      vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
+      vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
+    end,
     config = function ()
       require('Navigator').setup({})
     end
@@ -179,7 +187,14 @@ require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim',
     tag = '0.1.4',
     requires = 'nvim-lua/plenary.nvim',
-    cofig = function()
+    config = function()
+      vim.keymap.set('n', "<c-g>",
+        function()
+          vim.cmd("Telescope live_grep default_text=" .. vim.fn.expand("<cword>"))
+        end)
+      vim.keymap.set('n', '<c-l>', require('telescope.builtin').oldfiles)
+      vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files)
+
       require('telescope').setup {
         defaults = {
           mappings = {
@@ -276,10 +291,6 @@ vim.keymap.set('i', '<M-b>', '<C-o>B', opts)
 vim.keymap.set('i', '<M-f>', '<C-o>W', opts)
 vim.keymap.set('i', '<S-Tab>', '<c-d>', opts)
 vim.keymap.set('i', '<c-k>', '<c-o>D', opts)
-vim.keymap.set('n', "<C-j>h", "<CMD>lua require('Navigator').left()<CR>", opts)
-vim.keymap.set('n', "<C-j>j", "<CMD>lua require('Navigator').down()<CR>", opts)
-vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
-vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
 vim.keymap.set('n', '<S-Tab>', '<<', opts)
 vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', 'N', '?<CR>', opts)
@@ -291,13 +302,6 @@ vim.keymap.set({'i', 'c'}, '<c-b>', '<left>', opts)
 vim.keymap.set({'i', 'c'}, '<c-e>', '<end>', opts)
 vim.keymap.set({'i', 'c'}, '<c-f>', '<right>', opts)
 vim.keymap.set({'n', 'i', 'v', 'c'}, '<c-c>', '<esc>', opts)
-vim.keymap.set('n', "<c-g>",
-  function()
-    vim.cmd("Telescope live_grep default_text=" .. vim.fn.expand("<cword>"))
-  end)
-vim.keymap.set('n', '<c-l>', require('telescope.builtin').oldfiles)
-vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files)
-
 vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format() end, {})
 vim.api.nvim_create_user_command('Rename', function() vim.lsp.buf.rename() end, {})
 
