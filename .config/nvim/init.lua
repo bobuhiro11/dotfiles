@@ -1,4 +1,19 @@
 require('packer').startup(function(use)
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  }
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  }
   use "ellisonleao/gruvbox.nvim"
   use "folke/neodev.nvim"
   use "williamboman/mason-lspconfig.nvim"
@@ -9,7 +24,7 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/nvim-cmp'
-  use 'j-hui/fidget.nvim'
+  use {'j-hui/fidget.nvim', tag='legacy'}
   use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'norcalli/nvim-colorizer.lua'
@@ -29,6 +44,7 @@ require('packer').startup(function(use)
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'projekt0n/github-nvim-theme', tag = 'v0.0.7'}
   use {'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use {"iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end}
 end)
 
 vim.g.mapleader = ' '
@@ -36,6 +52,7 @@ vim.g.NERDTreeShowHidden = 1
 vim.g.NERDTreeChDirMode = 0
 vim.g.NERDTreeGitStatusUseNerdFonts = 1
 vim.g.DiffExpr = 0
+vim.g.mkdp_echo_preview_url = 1
 
 vim.opt.autochdir = false
 vim.opt.background = "dark"
@@ -123,15 +140,16 @@ vim.api.nvim_create_autocmd({"InsertEnter", "WinEnter", "CursorHold"}, {
 vim.api.nvim_create_autocmd({"VimEnter", "WinEnter", "ColorScheme", "Syntax"}, {
   callback = function()
     vim.cmd([[
-      " hard    tab
+      " hard	tab
       "　Zenkaku　Space　
-      " spaces at EOL
+      " spaces at EOL 
       highlight TAB ctermbg=237 guibg=#343434
       highlight WhitespaceEOL ctermbg=red guibg=red
       highlight ZenkakuSpace ctermbg=red guibg=red
       call matchadd('ZenkakuSpace', '　')
       call matchadd('TAB', '\t')
       call matchadd('WhitespaceEOL', '\s\+$')
+      " TODO: NOTE: XXX: FIXME:
       call matchadd('Todo', '\(TODO\|NOTE\|XXX\|FIXME\):')
     ]])
   end
@@ -169,6 +187,16 @@ require("mason-lspconfig").setup_handlers({
       }
     end
 
+    if server_name == "lua_ls" then
+      opts.settings = {
+        Lua = {
+          workspace = {
+            checkThirdParty = false,
+          },
+        },
+      }
+    end
+
     require("lspconfig")[server_name].setup(opts)
   end
 })
@@ -179,15 +207,13 @@ cmp.setup({
     { name = "nvim_lsp" },
     { name = "buffer" },
     { name = "path" },
+    { name = "copilot" },
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-
-    -- Accept currently selected item. Set `select` to `false` to
-    -- only confirm explicitly selected items.
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
@@ -195,16 +221,8 @@ cmp.setup({
 require('Navigator').setup({})
 require('fidget').setup()
 
-local colors = require("gruvbox.palette").colors;
 require("gruvbox").setup({
   inverse = true,
-  overrides = {
-    SignColumn = {bg = colors.dark0},
-    DiffDelete = {fg = colors.bright_blue, bg=colors.dark0, bold = false, reverse=true},
-    DiffAdd    = {fg = colors.bright_blue, bg=colors.dark0, bold = false, reverse=true},
-    DiffChange = {fg = colors.bright_blue, bg=colors.dark0, bold = false, reverse=true},
-    DiffText   = {fg = colors.bright_blue, bg=colors.dark0, bold = true,  reverse=true},
-  }
 })
 
 require('lualine').setup {
