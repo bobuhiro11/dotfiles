@@ -67,7 +67,51 @@ require('packer').startup(function(use)
     end,
   }
 
-  use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true}}
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'gruvbox',
+        },
+        inactive_sections = {
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+            },
+          },
+        },
+        sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {
+            {
+              'filename',
+              path = 1
+            },
+            {
+              function()
+                local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+                local max_severity = 4
+                local max_severity_idx
+                for i, diagnostic in ipairs(diagnostics) do
+                  if diagnostic.severity < max_severity then
+                    max_severity_idx = i
+                  end
+                end
+                return diagnostics[max_severity_idx].message
+              end,
+            },
+          },
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        }
+      }
+    end
+  }
   use {
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'make',
@@ -264,46 +308,6 @@ cmp.setup({
 
 require('Navigator').setup({})
 require('fidget').setup()
-
-require('lualine').setup {
-  options = {
-    theme = 'gruvbox',
-  },
-  inactive_sections = {
-    lualine_c = {
-      {
-        'filename',
-        path = 1,
-      },
-    },
-  },
-  sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {
-      {
-        'filename',
-        path = 1
-      },
-      {
-        function()
-          local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
-          local max_severity = 4
-          local max_severity_idx
-          for i, diagnostic in ipairs(diagnostics) do
-            if diagnostic.severity < max_severity then
-              max_severity_idx = i
-            end
-          end
-          return diagnostics[max_severity_idx].message
-        end,
-      },
-    },
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  }
-}
 
 vim.cmd([[colorscheme gruvbox]])
 
