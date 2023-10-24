@@ -37,7 +37,13 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/nvim-cmp'
-  use {'j-hui/fidget.nvim', tag='legacy'}
+  use {
+    'j-hui/fidget.nvim',
+    tag='legacy',
+    config = function()
+      require('fidget').setup()
+    end
+  }
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -51,7 +57,12 @@ require('packer').startup(function(use)
       require('colorizer').setup()
     end
   }
-  use 'numToStr/Navigator.nvim'
+  use {
+    'numToStr/Navigator.nvim',
+    config = function ()
+      require('Navigator').setup({})
+    end
+  }
   use 'preservim/nerdtree'
   use 'ryanoasis/vim-devicons'
   use 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -305,9 +316,6 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
-
-require('Navigator').setup({})
-require('fidget').setup()
 
 vim.cmd([[colorscheme gruvbox]])
 
