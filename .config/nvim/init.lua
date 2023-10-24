@@ -24,13 +24,38 @@ require('packer').startup(function(use)
   }
   use {
     "folke/neodev.nvim",
-    before = "lspconfig",
     config = function()
       require("neodev").setup()
     end
   }
-  use "williamboman/mason-lspconfig.nvim"
-  use "williamboman/mason.nvim"
+  use {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  }
+  use {
+    "williamboman/mason-lspconfig.nvim",
+    config = function ()
+      require("mason-lspconfig").setup({
+        ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
+        automatic_installation = true,
+      })
+      require("mason-lspconfig").setup_handlers({
+        function(server_name)
+          local opts = {}
+
+          if server_name == "yamlls" then
+            opts.settings = {
+              yaml = { keyOrdering = false},
+            }
+          end
+
+          require("lspconfig")[server_name].setup(opts)
+        end
+      })
+    end
+  }
   use 'Xuyuanp/nerdtree-git-plugin'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-cmdline'
@@ -303,25 +328,6 @@ vim.api.nvim_create_autocmd({"VimEnter", "WinEnter", "ColorScheme", "Syntax"}, {
       " TODO: NOTE: XXX: FIXME:
       call matchadd('Todo', '\(TODO\|NOTE\|XXX\|FIXME\):')
     ]])
-  end
-})
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
-  automatic_installation = true,
-})
-require("mason-lspconfig").setup_handlers({
-  function(server_name)
-    local opts = {}
-
-    if server_name == "yamlls" then
-      opts.settings = {
-        yaml = { keyOrdering = false},
-      }
-    end
-
-    require("lspconfig")[server_name].setup(opts)
   end
 })
 
