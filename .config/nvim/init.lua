@@ -53,7 +53,7 @@ require("lazy").setup({
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    after = "mason.nvim",
+    dependencies = "mason.nvim",
     config = function ()
       require("mason-lspconfig").setup({
         ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
