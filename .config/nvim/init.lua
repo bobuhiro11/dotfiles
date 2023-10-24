@@ -1,40 +1,57 @@
-require('packer').startup(function(use)
-  use {
+-- Install lazy.
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+vim.opt.termguicolors = true
+
+-- Plugins.
+require("lazy").setup({
+  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
       require("copilot").setup()
     end,
-  }
-  use {
+  },
+  {
     "zbirenbaum/copilot-cmp",
-    after = "copilot.lua",
+    dependencies = "copilot.lua",
     config = function ()
       require("copilot_cmp").setup()
     end
-  }
-  use {
+  },
+  {
     "ellisonleao/gruvbox.nvim",
     config = function()
       require("gruvbox").setup({
         inverse = true,
       })
     end
-  }
-  use {
+  },
+  {
     "folke/neodev.nvim",
     config = function()
       require("neodev").setup()
     end
-  }
-  use {
+  },
+  {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
     end
-  }
-  use {
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
     after = "mason.nvim",
     config = function ()
@@ -56,13 +73,13 @@ require('packer').startup(function(use)
         end
       })
     end
-  }
-  use 'Xuyuanp/nerdtree-git-plugin'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-path'
-  use {
+  },
+  'Xuyuanp/nerdtree-git-plugin',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-path',
+  {
     'hrsh7th/nvim-cmp',
     config = function ()
       local cmp = require("cmp")
@@ -82,28 +99,28 @@ require('packer').startup(function(use)
         }),
       })
     end
-  }
-  use {
+  },
+  {
     'j-hui/fidget.nvim',
     tag='legacy',
     config = function()
       require('fidget').setup()
     end
-  }
-  use {
+  },
+  {
     'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
     end
-  }
-  use 'neovim/nvim-lspconfig'
-  use {
+  },
+  'neovim/nvim-lspconfig',
+  {
     'norcalli/nvim-colorizer.lua',
     config = function()
       require('colorizer').setup()
     end
-  }
-  use {
+  },
+  {
     'numToStr/Navigator.nvim',
     config = function ()
       require('Navigator').setup({})
@@ -114,32 +131,25 @@ require('packer').startup(function(use)
       vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
       vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
     end
-  }
-  use 'preservim/nerdtree'
-  use 'ryanoasis/vim-devicons'
-  use 'tiagofumo/vim-nerdtree-syntax-highlight'
-  use {
+  },
+  'preservim/nerdtree',
+  'ryanoasis/vim-devicons',
+  'tiagofumo/vim-nerdtree-syntax-highlight',
+  {
     'tpope/vim-commentary',
     config = function ()
       local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "<leader>c", "<Plug>CommentaryLine")
       vim.keymap.set("x", "<leader>c", "<Plug>Commentary")
     end,
-  }
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
-  use 'tpope/vim-sleuth'
-  use 'wbthomason/packer.nvim'
-  use {
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require("telescope").load_extension("frecency")
-    end,
-  }
-
-  use {
+  },
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
+  'tpope/vim-sleuth',
+  'wbthomason/packer.nvim',
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
         options = {
@@ -181,18 +191,15 @@ require('packer').startup(function(use)
         }
       }
     end
-  }
-  use {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make',
-    config = function()
-      require('telescope').load_extension('fzf')
-    end
-  }
-  use {
+  },
+  {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.4',
-    requires = 'nvim-lua/plenary.nvim',
+    version = '0.1.4',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = "make" },
+      'nvim-telescope/telescope-frecency.nvim',
+    },
     config = function()
       vim.keymap.set('n', "<c-g>",
         function()
@@ -216,9 +223,11 @@ require('packer').startup(function(use)
           },
         },
       }
+      require("telescope").load_extension("frecency")
+      require('telescope').load_extension('fzf')
     end
-  }
-  use {
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = function ()
@@ -228,18 +237,18 @@ require('packer').startup(function(use)
         auto_install = true,
       }
     end
-  }
-  use {'projekt0n/github-nvim-theme', tag = 'v0.0.7'}
-  use {
+  },
+  {'projekt0n/github-nvim-theme', version = 'v0.0.7'},
+  {
     'sindrets/diffview.nvim',
     config = function()
       require("diffview").setup({
         enhanced_diff_hl = true
       })
     end,
-  }
-  use {"iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end}
-end)
+  },
+  {"iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end},
+})
 
 vim.g.mapleader = ' '
 vim.g.NERDTreeShowHidden = 1
@@ -276,7 +285,6 @@ vim.opt.spell = false
 vim.opt.startofline = false
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
-vim.opt.termguicolors = true
 vim.opt.updatetime = 300
 vim.opt.viewoptions = "folds,cursor,curdir"
 vim.opt.wildmenu = true
