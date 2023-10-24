@@ -72,7 +72,14 @@ require('packer').startup(function(use)
   use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'}}}
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'projekt0n/github-nvim-theme', tag = 'v0.0.7'}
-  use {'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use {
+    'sindrets/diffview.nvim',
+    config = function()
+      require("diffview").setup({
+        enhanced_diff_hl = true
+      })
+    end,
+  }
   use {"iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end}
 end)
 
@@ -293,9 +300,6 @@ require('telescope').setup {
 }
 
 require('telescope').load_extension('fzf')
-require("diffview").setup({
-  enhanced_diff_hl = true
-})
 
 vim.cmd([[colorscheme gruvbox]])
 
