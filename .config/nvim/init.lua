@@ -122,7 +122,7 @@ vim.keymap.set({'i', 'c'}, '<c-e>', '<end>', opts)
 vim.keymap.set({'i', 'c'}, '<c-f>', '<right>', opts)
 vim.keymap.set({'n', 'i', 'v', 'c'}, '<c-c>', '<esc>', opts)
 
-vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.formatting() end, {})
+vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format() end, {})
 vim.api.nvim_create_user_command('Rename', function() vim.lsp.buf.rename() end, {})
 
 vim.cmd([[
@@ -166,34 +166,16 @@ require("nvim-treesitter.configs").setup {
 require('gitsigns').setup()
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls', 'lua_ls'},
+  ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
   automatic_installation = true,
 })
 require("mason-lspconfig").setup_handlers({
   function(server_name)
     local opts = {}
 
-    if server_name == "sumneko_lua" then
-      opts.settings = {
-        Lua = {
-          diagnostics = { globals = { 'vim' } },
-        }
-      }
-    end
-
     if server_name == "yamlls" then
       opts.settings = {
         yaml = { keyOrdering = false},
-      }
-    end
-
-    if server_name == "lua_ls" then
-      opts.settings = {
-        Lua = {
-          workspace = {
-            checkThirdParty = false,
-          },
-        },
       }
     end
 
