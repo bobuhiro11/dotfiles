@@ -68,8 +68,35 @@ require('packer').startup(function(use)
   }
 
   use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true}}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-  use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'}}}
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make',
+    config = function()
+      require('telescope').load_extension('fzf')
+    end
+  }
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.4',
+    requires = 'nvim-lua/plenary.nvim',
+    cofig = function()
+      require('telescope').setup {
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-a>"] = {"<Home>", type="command"},
+              ["<C-e>"] = {"<End>", type="command"},
+              ["<C-f>"] = {"<Right>", type="command"},
+              ["<C-b>"] = {"<Left>", type="command"},
+              ["<C-h>"] = {"<BS>", type="command"},
+              ["<esc>"] = require('telescope.actions').close,
+              ["<C-c>"] = require('telescope.actions').close,
+            },
+          },
+        },
+      }
+    end
+  }
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'projekt0n/github-nvim-theme', tag = 'v0.0.7'}
   use {
@@ -143,10 +170,7 @@ vim.keymap.set('n', "<C-j>h", "<CMD>lua require('Navigator').left()<CR>", opts)
 vim.keymap.set('n', "<C-j>j", "<CMD>lua require('Navigator').down()<CR>", opts)
 vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
 vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
-vim.keymap.set('n', "<c-g>", function() vim.cmd("Telescope live_grep default_text=" .. vim.fn.expand("<cword>")) end)
 vim.keymap.set('n', '<S-Tab>', '<<', opts)
-vim.keymap.set('n', '<c-l>', require('telescope.builtin').oldfiles)
-vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files)
 vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', 'N', '?<CR>', opts)
 vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -157,6 +181,12 @@ vim.keymap.set({'i', 'c'}, '<c-b>', '<left>', opts)
 vim.keymap.set({'i', 'c'}, '<c-e>', '<end>', opts)
 vim.keymap.set({'i', 'c'}, '<c-f>', '<right>', opts)
 vim.keymap.set({'n', 'i', 'v', 'c'}, '<c-c>', '<esc>', opts)
+vim.keymap.set('n', "<c-g>",
+  function()
+    vim.cmd("Telescope live_grep default_text=" .. vim.fn.expand("<cword>"))
+  end)
+vim.keymap.set('n', '<c-l>', require('telescope.builtin').oldfiles)
+vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files)
 
 vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format() end, {})
 vim.api.nvim_create_user_command('Rename', function() vim.lsp.buf.rename() end, {})
@@ -274,32 +304,6 @@ require('lualine').setup {
     lualine_z = {}
   }
 }
-
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-a>"] = {"<Home>", type="command"},
-        ["<C-e>"] = {"<End>", type="command"},
-        ["<C-f>"] = {"<Right>", type="command"},
-        ["<C-b>"] = {"<Left>", type="command"},
-        ["<C-h>"] = {"<BS>", type="command"},
-        ["<esc>"] = require('telescope.actions').close,
-        ["<C-c>"] = require('telescope.actions').close,
-      },
-    },
-  },
-  extensions = {
-    fzf =  {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
-  }
-}
-
-require('telescope').load_extension('fzf')
 
 vim.cmd([[colorscheme gruvbox]])
 
