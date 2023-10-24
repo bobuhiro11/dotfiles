@@ -4,18 +4,31 @@ require('packer').startup(function(use)
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
+      require("copilot").setup()
     end,
   }
   use {
     "zbirenbaum/copilot-cmp",
-    after = { "copilot.lua" },
+    after = "copilot.lua",
     config = function ()
       require("copilot_cmp").setup()
     end
   }
-  use "ellisonleao/gruvbox.nvim"
-  use "folke/neodev.nvim"
+  use {
+    "ellisonleao/gruvbox.nvim",
+    config = function()
+      require("gruvbox").setup({
+        inverse = true,
+      })
+    end
+  }
+  use {
+    "folke/neodev.nvim",
+    before = "lspconfig",
+    config = function()
+      require("neodev").setup()
+    end
+  }
   use "williamboman/mason-lspconfig.nvim"
   use "williamboman/mason.nvim"
   use 'Xuyuanp/nerdtree-git-plugin'
@@ -25,9 +38,19 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/nvim-cmp'
   use {'j-hui/fidget.nvim', tag='legacy'}
-  use 'lewis6991/gitsigns.nvim'
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
   use 'neovim/nvim-lspconfig'
-  use 'norcalli/nvim-colorizer.lua'
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end
+  }
   use 'numToStr/Navigator.nvim'
   use 'preservim/nerdtree'
   use 'ryanoasis/vim-devicons'
@@ -155,15 +178,11 @@ vim.api.nvim_create_autocmd({"VimEnter", "WinEnter", "ColorScheme", "Syntax"}, {
   end
 })
 
-require("neodev").setup({}) -- Make sure to setup neodev BEFORE lspconfig
-require('colorizer').setup()
-
 require("nvim-treesitter.configs").setup {
   ensure_installed={"c", "lua", "go", "python", "ruby", "rust"},
   sync_install=false,
   auto_install = true,
 }
-require('gitsigns').setup()
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
@@ -202,10 +221,6 @@ cmp.setup({
 
 require('Navigator').setup({})
 require('fidget').setup()
-
-require("gruvbox").setup({
-  inverse = true,
-})
 
 require('lualine').setup {
   options = {
