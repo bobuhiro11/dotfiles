@@ -60,7 +60,13 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'tpope/vim-sleuth'
   use 'wbthomason/packer.nvim'
-  use {"nvim-telescope/telescope-frecency.nvim", requires = {"kkharji/sqlite.lua"}}
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+  }
+
   use {'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true}}
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
   use {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'}}}
@@ -283,12 +289,10 @@ require('telescope').setup {
       override_file_sorter = true,
       case_mode = "smart_case",
     },
-    frecency = {},
   }
 }
 
 require('telescope').load_extension('fzf')
-require("telescope").load_extension("frecency")
 require("diffview").setup({
   enhanced_diff_hl = true
 })
