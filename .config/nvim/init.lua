@@ -36,7 +36,27 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
-  use 'hrsh7th/nvim-cmp'
+  use {
+    'hrsh7th/nvim-cmp',
+    config = function ()
+      local cmp = require("cmp")
+      cmp.setup({
+        sources = {
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+          { name = "path" },
+          { name = "copilot" },
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+      })
+    end
+  }
   use {
     'j-hui/fidget.nvim',
     tag='legacy',
@@ -298,23 +318,6 @@ require("mason-lspconfig").setup_handlers({
 
     require("lspconfig")[server_name].setup(opts)
   end
-})
-
-local cmp = require("cmp")
-cmp.setup({
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "buffer" },
-    { name = "path" },
-    { name = "copilot" },
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
 })
 
 vim.cmd([[colorscheme gruvbox]])
