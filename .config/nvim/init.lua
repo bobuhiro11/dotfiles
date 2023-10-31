@@ -13,26 +13,30 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.opt.termguicolors = true
+vim.g.mapleader = ' '
 
 -- Plugins.
 require("lazy").setup({
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup()
-    end,
+  defaults = {
+    lazy = true,
   },
   {
     "zbirenbaum/copilot-cmp",
-    dependencies = "copilot.lua",
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+      config = function()
+        require("copilot").setup()
+      end,
+    },
+    cmd = "Copilot",
+    event = "InsertEnter",
     config = function ()
       require("copilot_cmp").setup()
     end
   },
   {
     "ellisonleao/gruvbox.nvim",
+    priority = 1000,
     config = function()
       require("gruvbox").setup({
         inverse = true,
@@ -46,14 +50,16 @@ require("lazy").setup({
     end
   },
   {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end
-  },
-  {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = "mason.nvim",
+    event = "InsertEnter",
+    dependencies =  {
+      {
+        "williamboman/mason.nvim",
+        config = function()
+          require("mason").setup()
+        end
+      },
+    },
     config = function ()
       require("mason-lspconfig").setup({
         ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
@@ -74,13 +80,15 @@ require("lazy").setup({
       })
     end
   },
-  'Xuyuanp/nerdtree-git-plugin',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-path',
   {
     'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+    },
+    event = 'InsertEnter',
     config = function ()
       local cmp = require("cmp")
       cmp.setup({
@@ -103,19 +111,29 @@ require("lazy").setup({
   {
     'j-hui/fidget.nvim',
     tag='legacy',
+    event = "LspAttach",
     config = function()
       require('fidget').setup()
     end
   },
   {
     'lewis6991/gitsigns.nvim',
+    event = { "FocusLost", "CursorHold" },
     config = function()
-      require('gitsigns').setup()
+      require('gitsigns').setup({
+        numhl = true,
+      })
     end
   },
-  'neovim/nvim-lspconfig',
   {
+    'neovim/nvim-lspconfig',
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+  },
+  {
+    -- Example: #558817
     'norcalli/nvim-colorizer.lua',
+    event = "VeryLazy",
     config = function()
       require('colorizer').setup()
     end
@@ -124,31 +142,53 @@ require("lazy").setup({
     'numToStr/Navigator.nvim',
     config = function ()
       require('Navigator').setup({})
-
-      local opts = { noremap = true, silent = true }
-      vim.keymap.set('n', "<C-j>h", "<CMD>lua require('Navigator').left()<CR>", opts)
-      vim.keymap.set('n', "<C-j>j", "<CMD>lua require('Navigator').down()<CR>", opts)
-      vim.keymap.set('n', "<C-j>k", "<CMD>lua require('Navigator').up()<CR>", opts)
-      vim.keymap.set('n', "<C-j>l", "<CMD>lua require('Navigator').right()<CR>", opts)
-    end
+    end,
+    keys = {
+      {"<C-j>h", "<CMD>lua require('Navigator').left()<CR>"},
+      {"<C-j>j", "<CMD>lua require('Navigator').down()<CR>"},
+      {"<C-j>k", "<CMD>lua require('Navigator').up()<CR>"},
+      {"<C-j>l", "<CMD>lua require('Navigator').right()<CR>"},
+    },
   },
-  'preservim/nerdtree',
-  'ryanoasis/vim-devicons',
-  'tiagofumo/vim-nerdtree-syntax-highlight',
+  {
+    'preservim/nerdtree',
+    dependencies = {
+      'tiagofumo/vim-nerdtree-syntax-highlight',
+      'ryanoasis/vim-devicons',
+    },
+    cmd = {
+      'NERDTreeToggle',
+    },
+  },
   {
     'tpope/vim-commentary',
-    config = function ()
-      local opts = { noremap = true, silent = true }
-      vim.keymap.set("n", "<leader>c", "<Plug>CommentaryLine")
-      vim.keymap.set("x", "<leader>c", "<Plug>Commentary")
-    end,
+    keys = {
+      {
+        "<leader>c",
+        "<Plug>CommentaryLine",
+        mode = "n"
+      },
+      {
+        "<leader>c",
+        "<Plug>Commentary",
+        mode = "x"
+      },
+    },
   },
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-  'tpope/vim-sleuth',
-  'wbthomason/packer.nvim',
+  {
+    'tpope/vim-fugitive',
+    dependencies = {
+      'tpope/vim-rhubarb',
+    },
+    cmd = { "Git" },
+  },
+  {
+    'tpope/vim-sleuth',
+    event = 'VeryLazy',
+  },
   {
     'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
@@ -185,9 +225,9 @@ require("lazy").setup({
               end,
             },
           },
-          lualine_x = {'location'},
+          lualine_x = {'filetype'},
           lualine_y = {},
-          lualine_z = {}
+          lualine_z = {'location'},
         }
       }
     end
@@ -200,16 +240,36 @@ require("lazy").setup({
       { 'nvim-telescope/telescope-fzf-native.nvim', build = "make" },
       'nvim-telescope/telescope-frecency.nvim',
     },
-    config = function()
-      vim.keymap.set('n', "<c-g>",
-        function()
+    keys = {
+      {
+        "<c-l>",
+        function ()
+          require('telescope.builtin').oldfiles()
+        end,
+      },
+      {
+        "<c-p>",
+        function ()
+          require('telescope.builtin').find_files()
+        end,
+      },
+      {
+        "<c-g>",
+        function ()
           vim.cmd("Telescope live_grep default_text=" .. vim.fn.expand("<cword>"))
-        end)
-      vim.keymap.set('n', '<c-l>', require('telescope.builtin').oldfiles)
-      vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files)
-
+        end,
+      },
+    },
+    config = function()
       require('telescope').setup {
         defaults = {
+          layout_strategy = 'vertical',
+          sorting_strategy = "descending",
+          layout_config = {
+            height = 0.5,
+            width = 0.5,
+            prompt_position = "bottom",
+          },
           mappings = {
             i = {
               ["<C-a>"] = {"<Home>", type="command"},
@@ -229,7 +289,8 @@ require("lazy").setup({
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
+    event = {'BufNewFile', 'BufRead'},
+    build = ':TSUpdate',
     config = function ()
       require("nvim-treesitter.configs").setup {
         ensure_installed={"c", "lua", "go", "python", "ruby", "rust"},
@@ -240,20 +301,19 @@ require("lazy").setup({
   },
   {'projekt0n/github-nvim-theme', version = 'v0.0.7'},
   {
-    'sindrets/diffview.nvim',
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
-      require("diffview").setup({
-        enhanced_diff_hl = true
-      })
+      vim.g.mkdp_echo_preview_url = 1
     end,
   },
-  {"iamcco/markdown-preview.nvim", run = function() vim.fn["mkdp#util#install"]() end},
 })
 
-vim.g.mapleader = ' '
 vim.g.NERDTreeShowHidden = 1
 vim.g.NERDTreeChDirMode = 0
-vim.g.NERDTreeGitStatusUseNerdFonts = 1
+vim.g.NERDTreeGitStatusUseNerdFonts = 0
 vim.g.DiffExpr = 0
 vim.g.mkdp_echo_preview_url = 1
 
@@ -278,7 +338,7 @@ vim.opt.number = true
 vim.opt.shiftwidth = 4
 vim.opt.showcmd = false
 vim.opt.showmode = false
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "no"
 vim.opt.smarttab = true
 vim.opt.softtabstop = 4
 vim.opt.spell = false
