@@ -178,9 +178,15 @@ require("lazy").setup({
   {
     'tpope/vim-fugitive',
     dependencies = {
-      'tpope/vim-rhubarb',
+      {
+        'tpope/vim-rhubarb',
+        -- disable the commit below to regex in g:github_enterprise_urls:
+        --   https://github.com/tpope/vim-rhubarb/commit/b4aad6d
+        --   https://github.com/tpope/vim-rhubarb/issues/67
+        commit = 'b4aad6d~',
+      },
     },
-    cmd = { "Git" },
+    cmd = { "Git", "GBrowse" },
   },
   {
     'tpope/vim-sleuth',
@@ -316,6 +322,7 @@ vim.g.NERDTreeChDirMode = 0
 vim.g.NERDTreeGitStatusUseNerdFonts = 0
 vim.g.DiffExpr = 0
 vim.g.mkdp_echo_preview_url = 1
+vim.g.github_enterprise_urls = { "[-_\\.a-zA-Z0-9]\\+" }
 
 vim.opt.autochdir = false
 vim.opt.background = "dark"
