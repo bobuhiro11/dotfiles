@@ -62,7 +62,11 @@ export KEYTIMEOUT=1 # 10ms for key sequences
 # os_cacert is optional for trusted certificates
 export OS_CACERT=/etc/pki/tls/certs/ca-bundle.crt
 
-export EDITOR=vim
+if [ -x "$(command -v nvim)" ]; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 
 export CYAN=$(tput setaf 6)
 export YELLOW=$(tput setaf 3)
