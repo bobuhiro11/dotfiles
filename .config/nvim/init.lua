@@ -64,18 +64,12 @@ require("lazy").setup({
     },
     config = function ()
       require("mason-lspconfig").setup({
-        ensure_installed = {'gopls', 'pyright', 'clangd', 'yamlls'},
+        ensure_installed = {'gopls', 'pyright'},
         automatic_installation = true,
       })
       require("mason-lspconfig").setup_handlers({
         function(server_name)
           local opts = {}
-
-          if server_name == "yamlls" then
-            opts.settings = {
-              yaml = { keyOrdering = false},
-            }
-          end
 
           require("lspconfig")[server_name].setup(opts)
         end
