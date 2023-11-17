@@ -24,8 +24,9 @@ alias ssh='TERM=xterm-256color ssh'
 alias date='date "+%Y/%m/%d %H:%M:%S %Z" '
 [[ "$(uname -s)" == "Linux" ]] && alias uptime_date='date -d "`cut -f1 -d. /proc/uptime` seconds ago" '
 
-export HISTFILE=~/.bash_history
+export HISTFILE=$HOME/.bash_history_of_mine
 export HISTSIZE=100000
+export HISTFILESIZE=100000
 export SAVEHIST=100000
 export DIRSTACKSIZE=100
 export GOPATH=$HOME/go
