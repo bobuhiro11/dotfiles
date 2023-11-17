@@ -293,18 +293,6 @@ require("lazy").setup({
       require('telescope').load_extension('fzf')
     end
   },
-  {
-    'nvim-treesitter/nvim-treesitter',
-    event = {'BufNewFile', 'BufRead'},
-    build = ':TSUpdate',
-    config = function ()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed={"c", "lua", "go", "python", "ruby", "rust"},
-        sync_install=false,
-        auto_install = true,
-      }
-    end
-  },
   {'projekt0n/github-nvim-theme', version = 'v0.0.7'},
   {
     "iamcco/markdown-preview.nvim",
