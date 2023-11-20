@@ -96,7 +96,7 @@ elseif v:version >= 800
 end
 " For true color support
 " https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6
-if !has('gui_running') && &term =~ '^\%(screen\|tmux\|xterm\)'
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\|xterm\)' && v:version >= 802
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   let &t_ZH = "\e[3m"
