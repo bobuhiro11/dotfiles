@@ -183,6 +183,7 @@ let g:mapleader = ' '
 let g:UltiSnipsExpandTrigger='<c-e>'
 let g:NERDTreeChDirMode = 0
 let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeGitStatusPorcelainVersion = 1
 let g:asyncomplete_popup_delay = 10
 let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
