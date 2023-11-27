@@ -40,7 +40,6 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'airblade/vim-gitgutter'
   Plug 'cespare/vim-toml', {'branch': 'main'}
   Plug 'chase/vim-ansible-yaml'
-  Plug 'christoomey/vim-tmux-navigator'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
@@ -149,6 +148,8 @@ set nostartofline
 set noswapfile
 set nospell
 set spelllang=en,cjk
+set title
+set titlestring=this-is-vim
 set autoread
 set confirm
 set noautochdir
@@ -174,7 +175,6 @@ if s:is_plugged('vim-airline')
 endif
 let g:suda_smart_edit = 1
 let g:mkdp_echo_preview_url = 1
-let g:tmux_navigator_no_mappings = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_frontmatter = 1
@@ -210,11 +210,10 @@ nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
 nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
 nnoremap <Leader>f :NERDTreeToggle<CR>
-nnoremap <silent> <C-j>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j>j :TmuxNavigateDown<cr>
-nnoremap <silent> <C-j>k :TmuxNavigateUp<cr>
-nnoremap <silent> <C-j>l :TmuxNavigateRight<cr>
-nnoremap <silent> <C-j>\ :TmuxNavigatePrevious<cr>
+nnoremap <silent> <C-j>h <c-w><c-h>
+nnoremap <silent> <C-j>j <c-w><c-j>
+nnoremap <silent> <C-j>k <c-w><c-k>
+nnoremap <silent> <C-j>l <c-w><c-l>
 inoremap <silent> <c-a> <home>
 inoremap <silent> <c-e> <end>
 inoremap <silent> <c-f> <right>
