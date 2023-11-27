@@ -65,9 +65,7 @@ export LC_ALL=en_US.utf-8
 # os_cacert is optional for trusted certificates
 export OS_CACERT=/etc/pki/tls/certs/ca-bundle.crt
 
-if [ -x "$(command -v nvim)" ]; then
-  export EDITOR=nvim
-else
+if [ -x "$(command -v vim)" ]; then
   export EDITOR=vim
 fi
 
