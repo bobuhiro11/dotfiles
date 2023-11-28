@@ -135,18 +135,6 @@ require("lazy").setup({
     end
   },
   {
-    'numToStr/Navigator.nvim',
-    config = function ()
-      require('Navigator').setup({})
-    end,
-    keys = {
-      {"<C-j>h", "<CMD>lua require('Navigator').left()<CR>"},
-      {"<C-j>j", "<CMD>lua require('Navigator').down()<CR>"},
-      {"<C-j>k", "<CMD>lua require('Navigator').up()<CR>"},
-      {"<C-j>l", "<CMD>lua require('Navigator').right()<CR>"},
-    },
-  },
-  {
     'preservim/nerdtree',
     dependencies = {
       'tiagofumo/vim-nerdtree-syntax-highlight',
@@ -335,6 +323,8 @@ vim.opt.softtabstop = 4
 vim.opt.spell = false
 vim.opt.startofline = false
 vim.opt.swapfile = false
+vim.opt.title = true
+vim.opt.titlestring = "this-is-vim"
 vim.opt.tabstop = 4
 vim.opt.updatetime = 300
 vim.opt.viewoptions = "folds,cursor,curdir"
@@ -358,6 +348,10 @@ vim.keymap.set('n', '<S-Tab>', '<<', opts)
 vim.keymap.set('n', 'N', '?<CR>', opts)
 vim.keymap.set('n', 'n', '/<CR>', opts)
 vim.keymap.set('n', 'q', '<nop>')
+vim.keymap.set('n', '<C-j>h', '<c-w><c-h>', opts)
+vim.keymap.set('n', '<C-j>j', '<c-w><c-j>', opts)
+vim.keymap.set('n', '<C-j>k', '<c-w><c-k>', opts)
+vim.keymap.set('n', '<C-j>l', '<c-w><c-l>', opts)
 vim.keymap.set({'i', 'c'}, '<c-a>', '<home>', opts)
 vim.keymap.set({'i', 'c'}, '<c-b>', '<left>', opts)
 vim.keymap.set({'i', 'c'}, '<c-e>', '<end>', opts)
