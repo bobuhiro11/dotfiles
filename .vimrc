@@ -206,6 +206,7 @@ let g:tmuxcomplete#asyncomplete_source_options = {
 nnoremap <leader>. :source $HOME/.vimrc<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
+nnoremap <C-@> :CD<CR>
 nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
 nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
@@ -245,7 +246,7 @@ highlight clear SpellCap
 highlight SpellCap cterm=underline,bold
 scriptencoding utf-8
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~/ -maxdepth 5 -type d', 'sink': 'cd'}))
+command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~ -maxdepth 3 -type d', 'sink': 'cd'}))
 if s:is_plugged('gruvbox')
   let $BAT_THEME='gruvbox-dark'
   let g:gruvbox_italic=1
