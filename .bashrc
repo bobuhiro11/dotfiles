@@ -124,8 +124,14 @@ function build_centos7_qcow2 {
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
+[ -f /opt/homebrew/etc/profile.d/bash_completion.sh ] && source /opt/homebrew/etc/profile.d/bash_completion.sh
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
+
+if [[ $(type -t _get_comp_words_by_ref) == 'function' ]]; then
+  [ -x "$(command -v kubectl)" ] && source <(kubectl completion bash)
+  [ -x "$(command -v kubebuilder)" ] && source <(kubebuilder completion bash)
+fi
 
 function checkhealth {
   echo -e "\e[1mbold\e[0m"
