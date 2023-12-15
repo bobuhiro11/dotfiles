@@ -208,6 +208,8 @@ nnoremap <leader>. :source $HOME/.vimrc<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
+nnoremap <Leader>g :GBrowse!<CR>
+vnoremap <Leader>g :GBrowse!<CR>
 nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
 nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
