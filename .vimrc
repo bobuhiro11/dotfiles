@@ -74,7 +74,7 @@ function s:is_plugged(name)
 endfunction
 function! RipgrepFzf(query, fullscreen)
   if executable('rg')
-    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case  --colors "match:fg:217,167,88" --colors "path:fg:235,106,99" --colors "line:fg:170,183,102" %s || true'
+    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case  --colors "match:fg:217,167,88" --colors "path:fg:235,106,99" --colors "line:fg:170,183,102" -g "!zz_generated.deepcopy.go" %s || true'
   else
     let l:command_fmt = 'grep -irnIH --max-count=100 --exclude-dir=.svn --exclude-dir=.git --exclude=tags --exclude=tags.lock --exclude-dir=vendor %s ./ || true'
   endif
