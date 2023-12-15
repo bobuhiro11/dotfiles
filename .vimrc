@@ -189,6 +189,7 @@ let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_preview_window = []
 let $FZF_DEFAULT_OPTS = '--bind ctrl-q:select-all+accept'
 let g:copilot_filetypes = { '*': v:true }
 let g:tmuxcomplete#asyncomplete_source_options = {
