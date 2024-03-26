@@ -19,6 +19,7 @@ alias meminfo_by_node="paste /sys/devices/system/node/node*/meminfo | sed -e 's/
 alias ovs_get_other_config='ovs-vsctl get Open_vSwitch . other_config'
 alias lscpu_ext='lscpu --extended=NODE,CORE,CPU'
 alias grep='grep --color=auto'
+alias grep_non_comments="grep -v '^\s*$\|^\s*\#'"
 # https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
 alias ssh='TERM=xterm-256color ssh'
 alias date='date "+%Y/%m/%d %H:%M:%S %Z" '
