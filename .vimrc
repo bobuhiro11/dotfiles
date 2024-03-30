@@ -45,7 +45,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'junegunn/vim-easy-align'
   Plug 'kchmck/vim-coffee-script'
   Plug 'lambdalisue/suda.vim'
-  Plug 'morhetz/gruvbox'
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
@@ -105,7 +105,7 @@ set noshowmode
 set helplang=ja
 set ttimeoutlen=0
 set viewoptions-=options
-set background=dark
+set background=light
 set nobackup
 set nowritebackup
 set ambiwidth=single
@@ -170,7 +170,7 @@ if s:is_plugged('vim-airline')
   let g:airline#extensions#branch#enabled = 0
   let g:airline#extensions#wordcount#enabled = 0
   let g:airline_powerline_fonts = 1
-  let g:airline_theme='gruvbox'
+  let g:airline_theme='catppuccin'
   let g:airline_section_z = airline#section#create_right(['colnr'])
 endif
 let g:suda_smart_edit = 1
@@ -190,7 +190,8 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = []
-let $FZF_DEFAULT_OPTS = '--bind ctrl-q:select-all+accept'
+" https://github.com/catppuccin/fzf
+let $FZF_DEFAULT_OPTS = '--bind ctrl-q:select-all+accept --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 --color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39'
 let g:copilot_filetypes = { '*': v:true }
 let g:tmuxcomplete#asyncomplete_source_options = {
       \ 'name':      'tmuxcomplete',
@@ -251,10 +252,8 @@ highlight SpellCap cterm=underline,bold
 scriptencoding utf-8
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~ -maxdepth 3 -type d', 'sink': 'cd'}))
-if s:is_plugged('gruvbox')
-  let $BAT_THEME='gruvbox-dark'
-  let g:gruvbox_italic=1
-  colorscheme gruvbox
+if s:is_plugged('catppuccin')
+  colorscheme catppuccin-latte
   set termguicolors
 endif
 function! CheckBackspace() abort
@@ -293,7 +292,8 @@ augroup MyAutoCmd
   "	hard	tab	
   "　Zenkaku　Space　
   " spaces at EOL 
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#343434
+  " refs: https://github.com/catppuccin/catppuccin
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#e6e9ef
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight! link SignColumn LineNr
@@ -306,7 +306,6 @@ augroup MyAutoCmd
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType go         setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
   autocmd FileType c          setlocal shiftwidth=8 tabstop=8 softtabstop=8 noexpandtab
-  autocmd FileType rst,mail,yaml,markdown   setlocal colorcolumn=79
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
