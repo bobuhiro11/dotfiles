@@ -49,7 +49,10 @@ export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
-export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
+export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8 \
+  --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
+  --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
+  --color=marker:#dc8a78,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39"
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
 export GOSUMDB=off
@@ -69,9 +72,12 @@ if [ -x "$(command -v vim)" ]; then
   export EDITOR=vim
 fi
 
-export CYAN=$(tput setaf 6)
-export YELLOW=$(tput setaf 3)
+export RED=$(tput setaf 1)
 export GREEN=$(tput setaf 2)
+export YELLOW=$(tput setaf 3)
+export BLUE=$(tput setaf 4)
+export MAGENTA=$(tput setaf 5)
+export CYAN=$(tput setaf 6)
 export RESET=$(tput sgr0)
 shopt -u histappend
 shopt -s autocd
@@ -82,7 +88,7 @@ if [[ "$HOSTNAME_SUFFIX" != "" ]]; then
   export HOSTNAME_SHORT=$(echo $HOSTNAME_SHORT | sed -e "s/\.$HOSTNAME_SUFFIX//g")
 fi
 
-export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
+export PS1='\[$BLUE\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
 
 [ ! -L "$SSH_AUTH_SOCK" ] && ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
