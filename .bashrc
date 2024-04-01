@@ -70,9 +70,12 @@ if [ -x "$(command -v vim)" ]; then
   export EDITOR=vim
 fi
 
-export CYAN=$(tput setaf 6)
-export YELLOW=$(tput setaf 3)
+export RED=$(tput setaf 1)
 export GREEN=$(tput setaf 2)
+export YELLOW=$(tput setaf 3)
+export BLUE=$(tput setaf 4)
+export MAGENTA=$(tput setaf 5)
+export CYAN=$(tput setaf 6)
 export RESET=$(tput sgr0)
 shopt -u histappend
 shopt -s autocd
@@ -83,7 +86,7 @@ if [[ "$HOSTNAME_SUFFIX" != "" ]]; then
   export HOSTNAME_SHORT=$(echo $HOSTNAME_SHORT | sed -e "s/\.$HOSTNAME_SUFFIX//g")
 fi
 
-export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
+export PS1='\[$BLUE\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
 
 [ ! -L "$SSH_AUTH_SOCK" ] && ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
