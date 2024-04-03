@@ -2,7 +2,8 @@
 
 alias free='free -w'
 alias ip='ip --color'
-alias ll='ls -lah'
+alias ls='ls --color'
+alias ll='ls -lah --color'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
