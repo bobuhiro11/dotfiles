@@ -45,12 +45,11 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'junegunn/vim-easy-align'
   Plug 'kchmck/vim-coffee-script'
   Plug 'lambdalisue/suda.vim'
-  Plug 'morhetz/gruvbox'
+  Plug 'sonph/onehalf', { 'rtp': 'vim' }
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-  Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
@@ -74,9 +73,9 @@ function s:is_plugged(name)
 endfunction
 function! RipgrepFzf(query, fullscreen)
   if executable('rg')
-    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case  --colors "match:fg:217,167,88" --colors "path:fg:235,106,99" --colors "line:fg:170,183,102" -g "!zz_generated.deepcopy.go" %s || true'
+    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case --colors "match:fg:0xe4,0x56,0x49" --colors "path:fg:0x38,0x3a,0x42" --colors "line:fg:0x38,0x3a,0x42" -g "!zz_generated.deepcopy.go" %s || true'
   else
-    let l:command_fmt = 'grep -irnIH --max-count=100 --exclude-dir=.svn --exclude-dir=.git --exclude=tags --exclude=tags.lock --exclude-dir=vendor %s ./ || true'
+    let l:command_fmt = 'GREP_COLORS="fn=:ln=:se=:" grep --color=always -irnIH --max-count=100 --exclude-dir=.svn --exclude-dir=.git --exclude=tags --exclude=tags.lock --exclude-dir=vendor %s ./ || true'
   endif
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
@@ -105,7 +104,7 @@ set noshowmode
 set helplang=ja
 set ttimeoutlen=0
 set viewoptions-=options
-set background=dark
+set background=light
 set nobackup
 set nowritebackup
 set ambiwidth=single
@@ -170,7 +169,7 @@ if s:is_plugged('vim-airline')
   let g:airline#extensions#branch#enabled = 0
   let g:airline#extensions#wordcount#enabled = 0
   let g:airline_powerline_fonts = 1
-  let g:airline_theme='gruvbox'
+  let g:airline_theme='onehalflight'
   let g:airline_section_z = airline#section#create_right(['colnr'])
 endif
 let g:suda_smart_edit = 1
@@ -190,7 +189,7 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = []
-let $FZF_DEFAULT_OPTS = '--bind ctrl-q:select-all+accept'
+let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --bind ctrl-q:select-all+accept'
 let g:copilot_filetypes = { '*': v:true }
 let g:tmuxcomplete#asyncomplete_source_options = {
       \ 'name':      'tmuxcomplete',
@@ -251,10 +250,8 @@ highlight SpellCap cterm=underline,bold
 scriptencoding utf-8
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~ -maxdepth 3 -type d', 'sink': 'cd'}))
-if s:is_plugged('gruvbox')
-  let $BAT_THEME='gruvbox-dark'
-  let g:gruvbox_italic=1
-  colorscheme gruvbox
+if s:is_plugged('onehalf')
+  colorscheme onehalflight
   set termguicolors
 endif
 function! CheckBackspace() abort
@@ -293,7 +290,7 @@ augroup MyAutoCmd
   "	hard	tab	
   "　Zenkaku　Space　
   " spaces at EOL 
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#343434
+  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#f0f0f0
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight! link SignColumn LineNr

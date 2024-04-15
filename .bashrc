@@ -52,6 +52,7 @@ export HISTTIMEFORMAT="%Y-%m-%d %T "
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#383a42,bg:#fafafa,hl:#e45649 --color=fg+:#383a42,bg+:#f0f0f0,hl+:#e45649'
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
 export GOSUMDB=off
@@ -90,6 +91,7 @@ export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
 [ -t 0 ] &&  stty start undef
+ssh-add -q
 
 if [ -f $HOME/.goenv/bin/goenv ]; then
   export GOENV_ROOT="$HOME/.goenv"
