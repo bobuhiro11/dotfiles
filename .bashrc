@@ -72,6 +72,7 @@ if [ -x "$(command -v vim)" ]; then
 fi
 
 export CYAN=$(tput setaf 6)
+export BLUE=$(tput setaf 4)
 export YELLOW=$(tput setaf 3)
 export GREEN=$(tput setaf 2)
 export RESET=$(tput sgr0)
@@ -84,7 +85,7 @@ if [[ "$HOSTNAME_SUFFIX" != "" ]]; then
   export HOSTNAME_SHORT=$(echo $HOSTNAME_SHORT | sed -e "s/\.$HOSTNAME_SUFFIX//g")
 fi
 
-export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
+export PS1='\[$GREEN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
 
 [ ! -L "$SSH_AUTH_SOCK" ] && ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
