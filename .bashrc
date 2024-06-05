@@ -91,7 +91,7 @@ export PS1='\[$CYAN\]$HOSTNAME_SHORT\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$ '
 export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 [ -t 0 ] &&  stty stop undef
 [ -t 0 ] &&  stty start undef
-ssh-add -q
+ssh-add > /dev/null 2>&1
 
 if [ -f $HOME/.goenv/bin/goenv ]; then
   export GOENV_ROOT="$HOME/.goenv"
