@@ -163,6 +163,7 @@ let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 
 let g:coc_user_config = {}
 let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
+let g:coc_user_config['pyright.inlayHints.parameterTypes'] = 0
 if s:is_plugged('vim-airline')
   let g:airline#extensions#coc#enabled = 1
   let g:airline#extensions#whitespace#enabled = 0
