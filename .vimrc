@@ -299,6 +299,8 @@ augroup MyAutoCmd
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('TAB', '\t')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('WhitespaceEOL', '\s\+$')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('Todo', '\(TODO\|NOTE\|XXX\|FIXME\):')
+  autocmd BufRead,BufNewFile .git/COMMIT_EDITMSG,COMMIT_EDITMSG setlocal nobuflisted viminfo=
+  autocmd BufRead,BufNewFile .vimrc setlocal buflisted
   autocmd InsertEnter,WinEnter,CursorHold * checktime
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
   autocmd FileType make       setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
