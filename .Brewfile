@@ -27,6 +27,7 @@ brew "grammarly-languageserver"
 brew "vint"
 brew "hugo"
 brew "rust"
+brew "tmux-xpanes"
 
 cask "alacritty"
 cask "font-hack-nerd-font"
