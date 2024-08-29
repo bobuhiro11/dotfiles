@@ -28,6 +28,8 @@ brew "vint"
 brew "hugo"
 brew "rust"
 brew "tmux-xpanes"
+brew "tcptraceroute"
+brew "watch"
 
 cask "alacritty"
 cask "font-hack-nerd-font"
