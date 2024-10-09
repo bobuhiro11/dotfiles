@@ -30,6 +30,7 @@ brew "rust"
 brew "tmux-xpanes"
 brew "tcptraceroute"
 brew "watch"
+brew "git-absorb"
 
 cask "alacritty"
 cask "font-hack-nerd-font"
