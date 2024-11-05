@@ -64,7 +64,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-jp/vimdoc-ja'
-  Plug 'github/copilot.vim'
+  Plug 'github/copilot.vim', {'tag': 'v1.32.0'}
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   call plug#end()
 endif
