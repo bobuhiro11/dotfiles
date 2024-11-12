@@ -31,6 +31,8 @@ brew "tmux-xpanes"
 brew "tcptraceroute"
 brew "watch"
 brew "git-absorb"
+brew "openstackclient"
+brew "step"
 
 cask "alacritty"
 cask "font-hack-nerd-font"
