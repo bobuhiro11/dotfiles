@@ -32,6 +32,7 @@ brew "openstackclient"
 brew "step"
 
 cask "alacritty"
+cask "wezterm"
 cask "font-hack-nerd-font"
 cask "bettertouchtool"
 cask "coteditor"
