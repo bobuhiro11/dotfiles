@@ -49,6 +49,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
+  Plug 'sunaku/tmux-navigate'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'tpope/vim-commentary'
@@ -215,10 +216,6 @@ nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
 nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
 nnoremap <Leader>f :NERDTreeToggle<CR>
-nnoremap <silent> <C-j>h <c-w><c-h>
-nnoremap <silent> <C-j>j <c-w><c-j>
-nnoremap <silent> <C-j>k <c-w><c-k>
-nnoremap <silent> <C-j>l <c-w><c-l>
 inoremap <silent> <c-a> <home>
 inoremap <silent> <c-e> <end>
 inoremap <silent> <c-f> <right>
