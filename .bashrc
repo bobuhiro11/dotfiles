@@ -48,12 +48,18 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
+export COLORSCHEME=$(cat $HOME/.colorscheme)
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#383a42,bg:#fafafa,hl:#e45649 --color=fg+:#383a42,bg+:#f0f0f0,hl+:#e45649'
+if [[ "$COLORSCHEME" == "onehalf" ]]; then
+  export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#383a42,bg:#fafafa,hl:#e45649 --color=fg+:#383a42,bg+:#f0f0f0,hl+:#e45649'
+fi
+if [[ "$COLORSCHEME" == "nord" ]]; then
+  export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#e5e9f0,bg:#2E3440,hl:#81a1c1 --color=fg+:#e5e9f0,bg+:#2E3440,hl+:#81a1c1 --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
+fi
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
 export GOSUMDB=off

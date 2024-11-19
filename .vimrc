@@ -45,6 +45,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'junegunn/vim-easy-align'
   Plug 'kchmck/vim-coffee-script'
   Plug 'lambdalisue/suda.vim'
+  Plug 'nordtheme/vim', { 'as': 'nord' }
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
   if v:version >= 802 || has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -105,13 +106,12 @@ set noshowmode
 set helplang=ja
 set ttimeoutlen=0
 set viewoptions-=options
-set background=light
 set nobackup
 set nowritebackup
 set ambiwidth=single
 set backspace=indent,eol,start
 set cinkeys-=0#
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set nolist
 set number
@@ -165,13 +165,25 @@ let g:coc_user_config = {}
 let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.parameterTypes'] = 0
+let g:nord_uniform_status_lines = 0
+if s:is_plugged('onehalf') && $COLORSCHEME == 'onehalf'
+  let g:airline_theme='onehalflight'
+  set background=light
+  colorscheme onehalflight
+  set termguicolors
+endif
+if s:is_plugged('nord') && $COLORSCHEME == 'nord'
+  let g:airline_theme='nord'
+  set background=dark
+  colorscheme nord
+  set termguicolors
+endif
 if s:is_plugged('vim-airline')
   let g:airline#extensions#coc#enabled = 1
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline#extensions#branch#enabled = 0
   let g:airline#extensions#wordcount#enabled = 0
   let g:airline_powerline_fonts = 1
-  let g:airline_theme='onehalflight'
   let g:airline_section_z = airline#section#create_right(['colnr'])
 endif
 let g:suda_smart_edit = 1
@@ -238,7 +250,9 @@ map q <nop>
 nmap s <Plug>(easymotion-overwin-f2)
 syntax enable
 filetype plugin indent on
-highlight Directory guifg=#FF0000 ctermfg=lightblue ctermbg=black guibg=black
+if s:is_plugged('onehalf') && $COLORSCHEME == 'onehalf'
+  highlight Directory guifg=#FF0000 ctermfg=lightblue ctermbg=black guibg=black
+endif
 highlight VertSplit guibg=NONE cterm=NONE
 highlight SpecialKey ctermfg=darkgray guifg=darkgray ctermbg=black guibg=black
 highlight clear SpellBad
@@ -248,10 +262,6 @@ highlight SpellCap cterm=underline,bold
 scriptencoding utf-8
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~ -maxdepth 3 -type d', 'sink': 'cd'}))
-if s:is_plugged('onehalf')
-  colorscheme onehalflight
-  set termguicolors
-endif
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -288,7 +298,12 @@ augroup MyAutoCmd
   "	hard	tab	
   "　Zenkaku　Space　
   " spaces at EOL 
-  autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#f0f0f0
+  if s:is_plugged('onehalf') && $COLORSCHEME == 'onehalf'
+    autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#f0f0f0
+  endif
+  if s:is_plugged('nord') && $COLORSCHEME == 'nord'
+    autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight TAB ctermbg=237 guibg=#3b4252
+  endif
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight WhitespaceEOL ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight ZenkakuSpace ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * highlight! link SignColumn LineNr
