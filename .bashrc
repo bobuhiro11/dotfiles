@@ -1,5 +1,22 @@
 [ -e /usr/bin/colordiff ] && alias diff='colordiff'
 
+base03="#002b36"
+base02="#073642"
+base01="#586e75"
+base00="#657b83"
+base0="#839496"
+base1="#93a1a1"
+base2="#eee8d5"
+base3="#fdf6e3"
+yellow="#b58900"
+orange="#cb4b16"
+red="#dc322f"
+magenta="#d33682"
+violet="#6c71c4"
+blue="#268bd2"
+cyan="#2aa198"
+green="#859900"
+
 alias free='free -w'
 alias ip='ip --color'
 alias ls='ls --color'
@@ -53,7 +70,7 @@ export HISTTIMEFORMAT="%Y-%m-%d %T "
 export PROMPT_COMMAND="history -a; history -c; history -r"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#383a42,bg:#fafafa,hl:#e45649 --color=fg+:#383a42,bg+:#f0f0f0,hl+:#e45649'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS" --color fg:-1,bg:-1,hl:$blue,fg+:$base02,bg+:$base2,hl+:$blue --color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow"
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
 export GOSUMDB=off
