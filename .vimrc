@@ -111,7 +111,7 @@ set nowritebackup
 set ambiwidth=single
 set backspace=indent,eol,start
 set cinkeys-=0#
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set nolist
 set number
