@@ -30,6 +30,7 @@ brew "watch"
 brew "git-absorb"
 brew "openstackclient"
 brew "step"
+brew "ipcalc"
 
 cask "alacritty"
 cask "wezterm"
