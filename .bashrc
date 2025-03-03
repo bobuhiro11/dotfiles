@@ -25,6 +25,7 @@ alias grep_non_comments="grep -v '^\s*$\|^\s*\#'"
 alias ssh='TERM=xterm-256color ssh'
 alias date='date "+%Y/%m/%d %H:%M:%S %Z" '
 alias kubectl_get_pods_with_image='kubectl get pods -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?(@.type==\"Ready\")].status,IMAGE:.spec.containers[*].image" '
+alias openstack='openstack --insecure '
 [[ "$(uname -s)" == "Linux" ]] && alias uptime_date='date -d "`cut -f1 -d. /proc/uptime` seconds ago" '
 
 export HISTFILE=$HOME/.bash_history_of_mine
