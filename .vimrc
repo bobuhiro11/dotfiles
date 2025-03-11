@@ -73,14 +73,16 @@ function s:is_plugged(name)
   return exists('g:plugs') && has_key(g:plugs, a:name) && isdirectory(g:plugs[a:name].dir)
 endfunction
 function! RipgrepFzf(query, fullscreen)
+  let query = substitute(a:query, ' ', '.*', 'g')
+
   if executable('rg')
-    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --smart-case --colors "match:fg:0xe4,0x56,0x49" --colors "path:fg:0x38,0x3a,0x42" --colors "line:fg:0x38,0x3a,0x42" -g "!zz_generated.deepcopy.go" %s || true'
+    let l:command_fmt = 'rg --text --no-binary --column --line-number --no-heading --color=always --ignore-case --colors "match:fg:0xe4,0x56,0x49" --colors "path:fg:0x38,0x3a,0x42" --colors "line:fg:0x38,0x3a,0x42" -g "!zz_generated.deepcopy.go" %s || true'
   else
     let l:command_fmt = 'GREP_COLORS="fn=:ln=:se=:" grep --color=always -irnIH --max-count=100 --exclude-dir=.svn --exclude-dir=.git --exclude=tags --exclude=tags.lock --exclude-dir=vendor %s ./ || true'
   endif
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  let initial_command = printf(command_fmt, shellescape(query))
+  let reload_command = printf(command_fmt, " $(echo {q} | sed 's/ /.*/g')")
+  let spec = {'options': ['--phony', '--query', query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 if has('nvim')
