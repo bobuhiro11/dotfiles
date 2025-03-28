@@ -212,8 +212,12 @@ nnoremap <leader>. :source $HOME/.vimrc<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
-nnoremap <Leader>g :GBrowse!<CR>
-vnoremap <Leader>g :GBrowse!<CR>
+nnoremap <Leader>c :Git commit -s 
+nnoremap <Leader>s :G \| only<CR>
+nnoremap <Leader>l :Git log \| only<CR>
+nnoremap <Leader>d :Git diff HEAD \| only<CR>
+nnoremap <Leader>b :GBrowse \| GBrowse!<CR>
+vnoremap <Leader>b :GBrowse \| GBrowse!<CR>
 nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <silent> <C-s> :bprevious<CR>
 nnoremap <silent> <expr> <c-g> ':RG ' . expand("<cword>") . '<CR>'
@@ -223,8 +227,6 @@ inoremap <silent> <c-e> <end>
 inoremap <silent> <c-f> <right>
 inoremap <silent> <c-b> <left>
 inoremap <silent> <c-k> <c-o>D
-nmap <Leader>c <Plug>CommentaryLine
-xmap <Leader>c <Plug>Commentary
 noremap  <c-c> <esc>
 noremap! <c-c> <esc>
 cnoremap <C-a> <Home>
@@ -309,6 +311,7 @@ augroup MyAutoCmd
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+  autocmd BufEnter * if &filetype == 'gitcommit' | only | endif
 augroup END
 
 if filereadable(expand('~/.vimrc.local'))
