@@ -54,6 +54,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
+  Plug 'rbong/vim-flog'
   Plug 'tpope/vim-repeat'
   " disable the commit below to regex in g:github_enterprise_urls:
   "   https://github.com/tpope/vim-rhubarb/commit/b4aad6d
@@ -170,7 +171,7 @@ let g:coc_user_config['pyright.inlayHints.parameterTypes'] = 0
 if s:is_plugged('vim-airline')
   let g:airline#extensions#coc#enabled = 1
   let g:airline#extensions#whitespace#enabled = 0
-  let g:airline#extensions#branch#enabled = 0
+  let g:airline#extensions#branch#enabled = 1
   let g:airline#extensions#wordcount#enabled = 0
   let g:airline_powerline_fonts = 1
   let g:airline_theme='onehalflight'
@@ -191,6 +192,7 @@ let g:asyncomplete_popup_delay = 10
 let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
+let g:fugitive_summary_format = "%cs || %s %d || %<(20,trunc)%an"
 let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = []
 let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --bind ctrl-q:select-all+accept'
@@ -213,9 +215,9 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
 nnoremap <Leader>c :Git commit -s 
-nnoremap <Leader>s :G \| only<CR>
-nnoremap <Leader>l :Git log \| only<CR>
-nnoremap <Leader>d :Git diff HEAD \| only<CR>
+nnoremap <Leader>s :call ToggleGit('Git')<CR>
+nnoremap <Leader>l :call ToggleGit('Git log')<CR>
+nnoremap <Leader>d :call ToggleGit('Git diff HEAD')<CR>
 nnoremap <Leader>b :GBrowse \| GBrowse!<CR>
 vnoremap <Leader>b :GBrowse \| GBrowse!<CR>
 nnoremap <silent> <C-k> :bnext<CR>
@@ -256,6 +258,17 @@ if s:is_plugged('onehalf')
   colorscheme onehalflight
   set termguicolors
 endif
+function! ToggleGit(command) abort
+  for l:winnr in range(1, winnr('$'))
+    if !empty(getwinvar(l:winnr, 'fugitive_status'))
+      exe l:winnr 'close'
+    endif
+    if getwinvar(l:winnr, '&filetype') == 'git' || getwinvar(l:winnr, '&filetype') == 'gitcommit'
+      exe l:winnr 'close'
+    endif
+  endfor
+  execute 'botright vertical' a:command
+endfunction
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -300,7 +313,7 @@ augroup MyAutoCmd
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('TAB', '\t')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('WhitespaceEOL', '\s\+$')
   autocmd VimEnter,WinEnter,ColorScheme,Syntax * call matchadd('Todo', '\(TODO\|NOTE\|XXX\|FIXME\):')
-  autocmd BufRead,BufNewFile .git/COMMIT_EDITMSG,COMMIT_EDITMSG setlocal nobuflisted viminfo=
+  autocmd BufRead,BufNewFile .git/COMMIT_EDITMSG,COMMIT_EDITMSG setlocal buflisted viminfo=
   autocmd BufRead,BufNewFile .vimrc setlocal buflisted
   autocmd InsertEnter,WinEnter,CursorHold * checktime
   autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
@@ -311,7 +324,6 @@ augroup MyAutoCmd
   autocmd FileType yaml,json  setlocal cursorline cursorcolumn
   autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent! call mkdir($HOME . "/.vim", "p") | mkview | endif
   autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
-  autocmd BufEnter * if &filetype == 'gitcommit' | only | endif
 augroup END
 
 if filereadable(expand('~/.vimrc.local'))
