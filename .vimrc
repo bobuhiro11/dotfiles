@@ -215,7 +215,9 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
 nnoremap <Leader>c :Git commit -s 
-nnoremap <Leader>s :call ToggleGit('Git')<CR>
+nnoremap <Leader>p :Git pr 
+nnoremap <Leader>s :Git sync origin 
+nnoremap <Leader>g :call ToggleGit('Git')<CR>
 nnoremap <Leader>l :call ToggleGit('Git log')<CR>
 nnoremap <Leader>d :call ToggleGit('Git diff HEAD')<CR>
 nnoremap <Leader>b :GBrowse \| GBrowse!<CR>
