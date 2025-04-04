@@ -216,7 +216,7 @@ nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
 nnoremap <Leader>c :Git commit -s 
 nnoremap <Leader>p :Git pr 
-nnoremap <Leader>s :Git sync origin 
+nnoremap <Leader>s :call ToggleGit('Git show')<CR>
 nnoremap <Leader>g :call ToggleGit('Git')<CR>
 nnoremap <Leader>l :call ToggleGit('Git log')<CR>
 nnoremap <Leader>d :call ToggleGit('Git diff HEAD')<CR>
@@ -261,15 +261,22 @@ if s:is_plugged('onehalf')
   set termguicolors
 endif
 function! ToggleGit(command) abort
+  let l:before = winnr('$')
+  execute 'botright vertical' a:command
+
+  let l:after = winnr('$')
+  let l:new_winnr = l:after > l:before ? winnr() : -1
+
   for l:winnr in range(1, winnr('$'))
+    if l:winnr == l:new_winnr
+      continue
+    endif
     if !empty(getwinvar(l:winnr, 'fugitive_status'))
       exe l:winnr 'close'
-    endif
-    if getwinvar(l:winnr, '&filetype') == 'git' || getwinvar(l:winnr, '&filetype') == 'gitcommit'
+    elseif getwinvar(l:winnr, '&filetype') ==# 'git' || getwinvar(l:winnr, '&filetype') ==# 'gitcommit'
       exe l:winnr 'close'
     endif
   endfor
-  execute 'botright vertical' a:command
 endfunction
 function! CheckBackspace() abort
   let col = col('.') - 1
