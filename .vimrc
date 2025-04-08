@@ -214,7 +214,6 @@ nnoremap <leader>. :source $HOME/.vimrc<CR>
 nnoremap <C-p> :Files<CR>
 nnoremap <C-l> :History<CR>
 nnoremap <C-@> :CD<CR>
-nnoremap <Leader>c :Git commit -s 
 nnoremap <Leader>p :Git pr 
 nnoremap <Leader>s :call ToggleGit('Git show')<CR>
 nnoremap <Leader>g :call ToggleGit('Git')<CR>
