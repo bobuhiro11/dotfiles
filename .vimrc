@@ -36,7 +36,6 @@
 "
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin()
-  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
   Plug 'cespare/vim-toml', {'branch': 'main'}
   Plug 'chase/vim-ansible-yaml'
@@ -186,8 +185,6 @@ let g:NERDTreeShowHidden = 1
 let g:mapleader = ' '
 let g:UltiSnipsExpandTrigger='<c-e>'
 let g:NERDTreeChDirMode = 0
-let g:NERDTreeGitStatusUseNerdFonts = 1
-let g:NERDTreeGitStatusPorcelainVersion = 1
 let g:asyncomplete_popup_delay = 10
 let g:asyncomplete_auto_completeopt = 0
 let g:EasyMotion_do_mapping = 0
