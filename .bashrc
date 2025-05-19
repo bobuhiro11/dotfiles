@@ -74,6 +74,10 @@ if [ -x "$(command -v vim)" ]; then
   export EDITOR=vim
 fi
 
+if [ -n "$TERM_PROGRAM" ] && [ "$TERM_PROGRAM" = "vscode" ]; then
+  export EDITOR='code --wait'
+fi
+
 export CYAN=$(tput setaf 6)
 export YELLOW=$(tput setaf 3)
 export GREEN=$(tput setaf 2)
