@@ -47,6 +47,7 @@ cask "slack"
 cask "font-jetbrains-mono"
 cask "font-fira-code"
 cask "google-cloud-sdk"
+cask "chatgpt"
 
 cask "font-fira-code"
 cask "google-cloud-sdk"
