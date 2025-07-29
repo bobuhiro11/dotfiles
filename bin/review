@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+# Check if a URL argument was provided
+if [ $# -eq 0 ]; then
+  echo "Error: Please provide a Git URL as an argument."
+  echo "Usage: $0 <git-url>"
+  exit 1
+fi
+
+# Extract repository information from the URL
+GIT_URL="$1"
+PR_URL="$GIT_URL"
+
+# Determine git host and extract info accordingly
+GIT_HOST=$(echo "$GIT_URL" | sed -E 's|https?://([^/]+)/.*|\1|')
+REPO_PATH=$(echo "$GIT_URL" | sed -E 's|https?://[^/]+/||' | sed -E 's|/pull/[0-9]+$||')
+CLONE_URL="git@$GIT_HOST:$REPO_PATH.git"
+PR_NUMBER=$(echo "$GIT_URL" | grep -oE 'pull/[0-9]+' | cut -d'/' -f2)
+REPO_NAME=$(basename "$REPO_PATH")
+
+# Check if the repository already exists in HOME directory
+if [ -d "$HOME/$REPO_NAME" ]; then
+  cd "$HOME/$REPO_NAME"
+  git sync origin main > /dev/null 2>&1 || true
+  git sync origin master > /dev/null 2>&1 || true
+else
+  cd "$HOME"
+  git clone "$CLONE_URL" "$REPO_NAME"
+  cd "$REPO_NAME"
+fi
+
+# Checkout the PR if a PR number was found
+if [ -n "$PR_NUMBER" ]; then
+  git fetch origin "pull/$PR_NUMBER/head:pr-$PR_NUMBER"
+  git checkout "pr-$PR_NUMBER"
+fi
+
+git log-oneline -n 3
+
+# Run claude code review command
+echo "Running claude code review..."
+claude "/review"
+
+echo "Review complete for $PR_URL"
