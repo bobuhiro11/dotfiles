@@ -48,6 +48,7 @@ cask "font-jetbrains-mono"
 cask "font-fira-code"
 cask "google-cloud-sdk"
 cask "chatgpt"
+cask "meetingbar"
 
 cask "font-fira-code"
 cask "google-cloud-sdk"
