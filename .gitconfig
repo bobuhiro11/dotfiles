@@ -48,3 +48,5 @@
     # https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
     # e.g. git log -1 --pretty=fixes 3b4a73b7d9c8
     fixes = Fixes: %h (\"%s\")
+[pager]
+    diff = true

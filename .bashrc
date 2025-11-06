@@ -65,6 +65,7 @@ export IGNOREEOF=100
 export KEYTIMEOUT=1 # 10ms for key sequences
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
+export TZ="Asia/Tokyo"
 
 # https://docs.openstack.org/kolla-ansible/victoria/admin/tls.html
 # os_cacert is optional for trusted certificates

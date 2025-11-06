@@ -460,3 +460,8 @@ chars = "\u001b"
 key = "RBracket"
 mods = "Control"
 chars = "\u001d"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+action = "None"
