@@ -167,6 +167,13 @@ let g:coc_user_config = {}
 let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
 let g:coc_user_config['pyright.inlayHints.parameterTypes'] = 0
+let g:coc_user_config['rust-analyzer.cargo.cfgs'] = []
+let g:coc_user_config['rust-analyzer.inlayHints.enable'] = v:false
+let g:coc_user_config['rust-analyzer.inlayHints.typeHints.enable'] = v:false
+let g:coc_user_config['rust-analyzer.inlayHints.parameterHints.enable'] = v:false
+let g:coc_user_config['rust-analyzer.inlayHints.chainingHints.enable'] = v:false
+let g:coc_user_config['rust-analyzer.inlayHints.closureReturnTypeHints.enable"'] = v:false
+let g:coc_user_config['rust-analyzer.workspace.ignoredFolders'] = ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"]
 if s:is_plugged('vim-airline')
   let g:airline#extensions#coc#enabled = 1
   let g:airline#extensions#whitespace#enabled = 0
