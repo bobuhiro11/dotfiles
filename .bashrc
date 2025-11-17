@@ -1,4 +1,4 @@
-[ -e /usr/bin/colordiff ] && alias diff='colordiff'
+[[ -x `which git` ]] && alias diff='git diff --no-index'
 
 alias free='free -w'
 alias ip='ip --color'
@@ -66,6 +66,7 @@ export KEYTIMEOUT=1 # 10ms for key sequences
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export TZ="Asia/Tokyo"
+export LESS='-i -M -R'
 
 # https://docs.openstack.org/kolla-ansible/victoria/admin/tls.html
 # os_cacert is optional for trusted certificates
