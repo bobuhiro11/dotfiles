@@ -48,6 +48,7 @@ export PATH="$HOME/bin/:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
@@ -66,7 +67,7 @@ export KEYTIMEOUT=1 # 10ms for key sequences
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export TZ="Asia/Tokyo"
-export LESS='-i -M -R'
+export LESS='-i -M -R -F -X'
 
 # https://docs.openstack.org/kolla-ansible/victoria/admin/tls.html
 # os_cacert is optional for trusted certificates
