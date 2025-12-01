@@ -134,6 +134,17 @@ function build_centos7_qcow2 {
   sudo qemu-system-x86_64 --enable-kvm -m 1024 -hda ./centos7.qcow2 -cpu kvm64 -nographic
 }
 
+function loadenv {
+  f="${1:-.env}"
+  if [ -f $f ]; then
+    set -a
+    source $f
+    set +a
+  else
+    echo "'$f' not found" 1>&2
+  fi
+}
+
 [ -f $HOME/.pyenv/bin/pyenv ] && eval "$(pyenv init -)"
 [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 [ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
