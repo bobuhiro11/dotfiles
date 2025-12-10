@@ -257,6 +257,7 @@ highlight SpellBad cterm=underline
 highlight clear SpellCap
 highlight SpellCap cterm=underline,bold
 scriptencoding utf-8
+command! Pbcopy silent %w !pbcopy
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 command! -nargs=* -complete=dir CD call fzf#run(fzf#wrap({'source': 'find ~ -maxdepth 3 -type d', 'sink': 'cd'}))
 if s:is_plugged('onehalf')
