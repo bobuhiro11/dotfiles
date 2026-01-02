@@ -1,5 +1,6 @@
 {
   "env": {},
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(npm run lint)",
@@ -21,6 +22,7 @@
       "Bash(cat:*)",
       "Bash(echo:*)",
       "Bash(xargs:*)",
+      "Bash(wc:*)",
       "Bash(head:*)",
       "Bash(tail:*)",
       "Bash(git init:*)",
@@ -31,13 +33,15 @@
       "Bash(git log:*)",
       "Read(~/.bashrc)"
     ],
+    "ask": [
+      "Bash(gh:*)",
+      "Bash(git push:*)"
+    ],
     "deny": [
       "Bash(sudo:*)",
       "Bash(rm -rf:*)",
-      "Bash(git push:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
-      "Bash(gh:*)",
       "Read(.env.*)",
       "Read(id_rsa)",
       "Read(id_ed25519)",
