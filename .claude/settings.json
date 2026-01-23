@@ -2,6 +2,7 @@
   "env": {},
   "includeCoAuthoredBy": false,
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Bash(npm run lint)",
       "Bash(npm run test:*)",
@@ -31,11 +32,9 @@
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh run view:*)",
       "Read(~/.bashrc)"
-    ],
-    "ask": [
-      "Bash(gh:*)",
-      "Bash(git push:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
@@ -46,6 +45,10 @@
       "Read(id_rsa)",
       "Read(id_ed25519)",
       "Write(.env*)"
+    ],
+    "ask": [
+      "Bash(gh:*)",
+      "Bash(git push:*)"
     ]
   },
   "hooks": {
