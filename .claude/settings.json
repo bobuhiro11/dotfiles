@@ -32,8 +32,12 @@
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
+      "Bash(git fetch:*)",
+      "Bash(git branch:*)",
+      "Bash(git merge-base:*)",
       "Bash(gh pr checks:*)",
       "Bash(gh run view:*)",
+      "Bash(gh search pr:*)",
       "Read(~/.bashrc)"
     ],
     "deny": [
