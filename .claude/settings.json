@@ -1,17 +1,19 @@
 {
   "env": {},
+  "language": "english",
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "plan",
     "allow": [
       "Bash(npm run lint)",
       "Bash(npm run test:*)",
       "Bash(go:*)",
+      "Bash(test:*)",
+      "Bash(sort:*)",
       "Bash(python:*)",
       "Bash(uv:*)",
       "Bash(true)",
       "Bash(false)",
-      "Bash(sed)",
+      "Bash(sed:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(make:*)",
@@ -22,11 +24,14 @@
       "Bash(grep:*)",
       "Bash(cat:*)",
       "Bash(echo:*)",
+      "Bash(which:*)",
+      "Bash(basename:*)",
+      "Bash(tee:*)",
       "Bash(xargs:*)",
       "Bash(wc:*)",
       "Bash(head:*)",
+      "Bash(comm:*)",
       "Bash(tail:*)",
-      "Bash(git init:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git status:*)",
@@ -34,17 +39,21 @@
       "Bash(git log:*)",
       "Bash(git fetch:*)",
       "Bash(git branch:*)",
+      "Bash(git checkout:*)",
       "Bash(git merge-base:*)",
       "Bash(gh pr checks:*)",
       "Bash(gh run view:*)",
       "Bash(gh search pr:*)",
+      "Write(*)",
       "Read(~/.bashrc)"
     ],
     "deny": [
       "Bash(sudo:*)",
       "Bash(rm -rf:*)",
+      "Bash(git init:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
+      "Bash(git clone:*)",
       "Read(.env.*)",
       "Read(id_rsa)",
       "Read(id_ed25519)",
@@ -53,7 +62,8 @@
     "ask": [
       "Bash(gh:*)",
       "Bash(git push:*)"
-    ]
+    ],
+    "defaultMode": "plan"
   },
   "hooks": {
     "Notification": [
