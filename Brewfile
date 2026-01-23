@@ -31,6 +31,7 @@ brew "git-absorb"
 brew "openstackclient"
 brew "step"
 brew "ipcalc"
+brew "ccusage"
 
 cask "alacritty"
 cask "wezterm"
