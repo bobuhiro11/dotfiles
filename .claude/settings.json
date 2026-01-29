@@ -76,7 +76,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e \"display notification \\\"Check\\\" with title \\\"Claude Code\\\"\""
+            "command": "osascript -e \"beep 2\" -e \"display dialog \\\"🔔 Claude Code Notification\\n\\nAction required.\\n\\nDirectory: $(basename $(pwd))\\\" with title \\\"Claude Code - Waiting\\\" with icon caution buttons {\\\"OK\\\"} default button \\\"OK\\\"\""
           }
         ]
       }
@@ -87,7 +87,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e \"display notification \\\"Done\\\" with title \\\"Claude Code\\\"\""
+            "command": "osascript -e \"beep 3\" -e \"display dialog \\\"✅ Claude Code Task Complete\\n\\nProcessing finished successfully.\\n\\nDirectory: $(basename $(pwd))\\\" with title \\\"Claude Code - Done\\\" with icon note buttons {\\\"OK\\\"} default button \\\"OK\\\"\""
           }
         ]
       }
