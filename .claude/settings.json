@@ -32,6 +32,7 @@
       "Bash(head:*)",
       "Bash(comm:*)",
       "Bash(tail:*)",
+      "Bash(sleep:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git status:*)",
@@ -42,10 +43,12 @@
       "Bash(git checkout:*)",
       "Bash(git merge-base:*)",
       "Bash(gh pr checks:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
       "Bash(gh run view:*)",
       "Bash(gh run list:*)",
       "Bash(gh run watch:*)",
-      "Bash(gh search pr:*)",
+      "Bash(gh search prs:*)",
       "Write(*)",
       "Read(~/.bashrc)"
     ],
@@ -62,7 +65,6 @@
       "Write(.env*)"
     ],
     "ask": [
-      "Bash(gh:*)",
       "Bash(git push:*)"
     ],
     "defaultMode": "plan"
