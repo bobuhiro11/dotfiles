@@ -50,6 +50,8 @@
       "Bash(gh run watch:*)",
       "Bash(gh search prs:*)",
       "Write(*)",
+      "Read(//tmp/**)",
+      "Read(/**)",
       "Read(~/.bashrc)"
     ],
     "deny": [
