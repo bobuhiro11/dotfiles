@@ -52,7 +52,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT="%Y-%m-%d %T "
-export PROMPT_COMMAND="history -a; history -c; history -r"
+export PROMPT_COMMAND="history -a; history -n"
 export FZF_DEFAULT_COMMAND="find -L . -type d -name '.git' -prune -o -type d -name '.cache' -prune -o -type d -name 'vendor' -prune -o -type f"
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --height 1% --min-height=8"
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#383a42,bg:#fafafa,hl:#e45649 --color=fg+:#383a42,bg+:#f0f0f0,hl+:#e45649'
@@ -85,7 +85,7 @@ export CYAN=$(tput setaf 6)
 export YELLOW=$(tput setaf 3)
 export GREEN=$(tput setaf 2)
 export RESET=$(tput sgr0)
-shopt -u histappend
+shopt -s histappend
 shopt -s autocd
 
 export HOSTNAME_SHORT=$(hostname)
