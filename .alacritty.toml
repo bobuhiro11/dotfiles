@@ -465,3 +465,8 @@ chars = "\u001d"
 key = "T"
 mods = "Command"
 action = "None"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001b[13;2u"
