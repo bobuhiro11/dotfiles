@@ -53,3 +53,4 @@ cask "meetingbar"
 
 cask "font-fira-code"
 cask "google-cloud-sdk"
+cask "reminders-menubar"

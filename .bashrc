@@ -28,6 +28,14 @@ alias kubectl_get_pods_with_image='kubectl get pods -o custom-columns="NAMESPACE
 alias openstack='openstack --insecure '
 [[ "$(uname -s)" == "Linux" ]] && alias uptime_date='date -d "`cut -f1 -d. /proc/uptime` seconds ago" '
 
+sleepalert() {
+  if [[ -z "$1" ]] || ! [[ "$1" =~ ^[0-9]+(\.[0-9]+)?[smhd]?$ ]]; then
+    printf '\a' > /dev/tty
+    return 1
+  fi
+  sleep "$1" && printf '\a' > /dev/tty
+}
+
 export HISTFILE=$HOME/.bash_history_of_mine
 export HISTSIZE=100000
 export HISTFILESIZE=100000

@@ -37,6 +37,8 @@
 if ! empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin()
   Plug 'airblade/vim-gitgutter'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete.vim'
   Plug 'cespare/vim-toml', {'branch': 'main'}
   Plug 'chase/vim-ansible-yaml'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -46,7 +48,7 @@ if ! empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'lambdalisue/suda.vim'
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
   if v:version >= 802 || has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'prabirshrestha/vim-lsp'
   endif
   Plug 'sunaku/tmux-navigate'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -162,20 +164,11 @@ let g:netrw_banner=0
 let g:netrw_sizestyle='H'
 let g:netrw_timefmt='%Y/%m/%d(%a) %H:%M:%S'
 let g:netrw_preview=1
-let g:coc_global_extensions = ['coc-go', 'coc-pyright', 'coc-vimlsp', 'coc-sh', 'coc-snippets', 'coc-yaml', 'coc-rust-analyzer']
-let g:coc_user_config = {}
-let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = 0
-let g:coc_user_config['pyright.inlayHints.variableTypes'] = 0
-let g:coc_user_config['pyright.inlayHints.parameterTypes'] = 0
-let g:coc_user_config['rust-analyzer.cargo.cfgs'] = []
-let g:coc_user_config['rust-analyzer.inlayHints.enable'] = v:false
-let g:coc_user_config['rust-analyzer.inlayHints.typeHints.enable'] = v:false
-let g:coc_user_config['rust-analyzer.inlayHints.parameterHints.enable'] = v:false
-let g:coc_user_config['rust-analyzer.inlayHints.chainingHints.enable'] = v:false
-let g:coc_user_config['rust-analyzer.inlayHints.closureReturnTypeHints.enable"'] = v:false
-let g:coc_user_config['rust-analyzer.workspace.ignoredFolders'] = ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"]
+let g:lsp_fold_enabled = 0
+let g:lsp_inlay_hints_enabled = 0
+let g:lsp_format_sync_timeout = 1000
 if s:is_plugged('vim-airline')
-  let g:airline#extensions#coc#enabled = 1
+  let g:airline#extensions#lsp#enabled = 1
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline#extensions#branch#enabled = 1
   let g:airline#extensions#wordcount#enabled = 0
@@ -247,6 +240,7 @@ nnoremap n /<CR>
 nnoremap N ?<CR>
 map q <nop>
 nmap s <Plug>(easymotion-overwin-f2)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 syntax enable
 filetype plugin indent on
 highlight Directory guifg=#FF0000 ctermfg=lightblue ctermbg=black guibg=black
@@ -290,28 +284,120 @@ endfunction
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
+  elseif exists(':LspHover') == 2 && exists('*lsp#get_allowed_servers') && !empty(lsp#get_allowed_servers())
+    execute 'LspHover'
   else
     execute '!' . &keywordprg . ' ' . expand('<cword>')
   endif
 endfunction
 
-if s:is_plugged('coc.nvim')
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+if s:is_plugged('asyncomplete.vim')
+  inoremap <silent><expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<CR>" : "\<C-g>u\<CR>"
   inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ pumvisible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-  nmap <silent>gd <Plug>(coc-definition)
-  nmap <leader>rn <Plug>(coc-rename)
-  " https://github.com/neoclide/coc.nvim/issues/4372#issuecomment-1320880794
-  command! -nargs=0 Format :call CocActionAsync('format')
-  command! -nargs=0 OR :call CocActionAsync('organizeImport')
+      \ asyncomplete#force_refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 endif
+
+command! -nargs=0 Format call <SID>format_document()
+command! -nargs=0 OR call <SID>organize_imports()
+
+function! s:format_document() abort
+  if exists(':LspDocumentFormatSync') == 2 && exists('*lsp#get_allowed_servers') && !empty(lsp#get_allowed_servers())
+    execute 'LspDocumentFormatSync'
+  else
+    echo 'LSP format is not available'
+  endif
+endfunction
+
+function! s:organize_imports() abort
+  if exists('*lsp#ui#vim#code_action#do') && exists('*lsp#get_allowed_servers') && !empty(lsp#get_allowed_servers())
+    call lsp#ui#vim#code_action#do({
+          \ 'sync': v:true,
+          \ 'query': 'source.organizeImports',
+          \ })
+  else
+    echo 'LSP organize imports is not available'
+  endif
+endfunction
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  if exists('+tagfunc')
+    setlocal tagfunc=lsp#tagfunc
+  endif
+  nmap <silent><buffer> gd <Plug>(lsp-definition)
+  nmap <silent><buffer> gr <Plug>(lsp-references)
+  nmap <silent><buffer> gi <Plug>(lsp-implementation)
+  nmap <silent><buffer> gt <Plug>(lsp-type-definition)
+  nmap <silent><buffer> <leader>rn <Plug>(lsp-rename)
+  nmap <silent><buffer> [g <Plug>(lsp-previous-diagnostic)
+  nmap <silent><buffer> ]g <Plug>(lsp-next-diagnostic)
+endfunction
+
+function! s:register_lsp_servers() abort
+  if executable('gopls')
+    " go install golang.org/x/tools/gopls@latest
+    call lsp#register_server({
+          \ 'name': 'gopls',
+          \ 'cmd': {server_info->['gopls']},
+          \ 'allowlist': ['go'],
+          \ })
+  endif
+
+  if executable('pyright-langserver')
+    " npm install -g pyright
+    call lsp#register_server({
+          \ 'name': 'pyright',
+          \ 'cmd': {server_info->['pyright-langserver', '--stdio']},
+          \ 'allowlist': ['python'],
+          \ })
+  endif
+
+  if executable('vim-language-server')
+    " npm install -g vim-language-server
+    call lsp#register_server({
+          \ 'name': 'vim-language-server',
+          \ 'cmd': {server_info->['vim-language-server', '--stdio']},
+          \ 'allowlist': ['vim'],
+          \ })
+  endif
+
+  if executable('bash-language-server')
+    " npm install -g bash-language-server
+    call lsp#register_server({
+          \ 'name': 'bash-language-server',
+          \ 'cmd': {server_info->['bash-language-server', 'start']},
+          \ 'allowlist': ['sh'],
+          \ })
+  endif
+
+  if executable('yaml-language-server')
+    " npm install -g yaml-language-server
+    call lsp#register_server({
+          \ 'name': 'yaml-language-server',
+          \ 'cmd': {server_info->['yaml-language-server', '--stdio']},
+          \ 'allowlist': ['yaml'],
+          \ })
+  endif
+
+  if executable('rust-analyzer')
+    " Install rust-analyzer manually and ensure it is in $PATH.
+    call lsp#register_server({
+          \ 'name': 'rust-analyzer',
+          \ 'cmd': {server_info->['rust-analyzer']},
+          \ 'allowlist': ['rust'],
+          \ })
+  endif
+endfunction
+
+augroup MyLsp
+  autocmd!
+  autocmd User lsp_setup call s:register_lsp_servers()
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 augroup MyAutoCmd
   autocmd!

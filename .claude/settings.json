@@ -4,103 +4,14 @@
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
-      "Bash(npm run lint)",
-      "Bash(npm run test:*)",
-      "Bash(go:*)",
-      "Bash(test:*)",
-      "Bash(sort:*)",
-      "Bash(python:*)",
-      "Bash(python3:*)",
-      "Bash(uv:*)",
-      "Bash(printf:*)",
-      "Bash(uniq:*)",
-      "Bash(true)",
-      "Bash(false)",
-      "Bash(sed:*)",
-      "Bash(ls:*)",
-      "Bash(find:*)",
-      "Bash(make:*)",
-      "Bash(gofumpt:*)",
-      "Bash(golangci-lint:*)",
-      "Bash(mkdir:*)",
-      "Bash(mockgen:*)",
-      "Bash(grep:*)",
-      "Bash(cat:*)",
-      "Bash(echo:*)",
-      "Bash(which:*)",
-      "Bash(basename:*)",
-      "Bash(cp:*)",
-      "Bash(date)",
-      "Bash(diff:*)",
-      "Bash(dirname:*)",
-      "Bash(file:*)",
-      "Bash(jq:*)",
-      "Bash(mv:*)",
-      "Bash(pwd)",
-      "Bash(realpath:*)",
-      "Bash(touch:*)",
-      "Bash(tree:*)",
-      "Bash(tee:*)",
-      "Bash(xargs:*)",
-      "Bash(yes:*)",
-      "Bash(wc:*)",
-      "Bash(head:*)",
-      "Bash(comm:*)",
-      "Bash(tail:*)",
-      "Bash(sleep:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git status:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git rm:*)",
-      "Bash(git fetch:*)",
-      "Bash(git branch:*)",
-      "Bash(git config --list)",
-      "Bash(git checkout:*)",
-      "Bash(git merge-base:*)",
-      "Bash(git rev-parse:*)",
-      "Bash(gh pr checks:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh pr diff:*)",
-      "Bash(gh run view:*)",
-      "Bash(gh run list:*)",
-      "Bash(gh run watch:*)",
-      "Bash(gh search prs:*)",
       "Write(*)",
       "Edit(*)",
-      "Bash(while:*)",
-      "Bash(for:*)",
-      "Bash(done:*)",
-      "Bash([:*)",
-      "Bash(]:*)",
-      "Bash([[:*)",
-      "Bash(]]:*)",
-      "Bash(read:*)",
-      "Bash(if:*)",
-      "Bash(then:*)",
-      "Bash(else:*)",
-      "Bash(elif:*)",
-      "Bash(fi:*)",
-      "Bash(case:*)",
-      "Bash(esac:*)",
-      "Bash(break:*)",
-      "Bash(continue:*)",
-      "Bash(until:*)",
-      "Bash(function:*)",
-      "Bash(return:*)",
-      "Bash(local:*)",
-      "Bash(readonly:*)",
-      "Bash(shift:*)",
-      "Bash(select:*)",
-      "Bash(in:*)",
-      "Bash(getopts:*)",
-      "Bash(let:*)",
-      "Bash(wait:*)",
-      "Read(*)"
+      "Read(*)",
+      "Bash(*)"
     ],
     "deny": [
       "Bash(sudo:*)",
+      "Bash(gh pr review:*)",
       "Bash(rm -rf:*)",
       "Bash(git init:*)",
       "Bash(git reset:*)",
@@ -111,9 +22,6 @@
       "Read(id_ed25519)",
       "Write(.env*)"
     ],
-    "ask": [
-      "Bash(git push:*)"
-    ],
     "defaultMode": "plan"
   },
   "hooks": {
@@ -123,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e \"beep 2\" -e \"display dialog \\\"🔔 Claude Code Notification\\n\\nAction required.\\n\\nDirectory: $(basename $(pwd))\\\" with title \\\"Claude Code - Waiting\\\" with icon caution buttons {\\\"OK\\\"} default button \\\"OK\\\"\""
+            "command": "printf '\\a' > /dev/tty"
           }
         ]
       }
@@ -134,7 +42,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e \"beep 3\" -e \"display dialog \\\"✅ Claude Code Task Complete\\n\\nProcessing finished successfully.\\n\\nDirectory: $(basename $(pwd))\\\" with title \\\"Claude Code - Done\\\" with icon note buttons {\\\"OK\\\"} default button \\\"OK\\\"\""
+            "command": "printf '\\a' > /dev/tty"
           }
         ]
       }
@@ -143,5 +51,6 @@
   "statusLine": {
     "type": "command",
     "command": "ccusage statusline"
-  }
+  },
+  "skipAutoPermissionPrompt": true
 }
