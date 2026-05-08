@@ -32,6 +32,7 @@ brew "openstackclient"
 brew "step"
 brew "ipcalc"
 brew "ccusage"
+brew "parquet-cli"
 
 cask "alacritty"
 cask "wezterm"
