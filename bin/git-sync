@@ -6,4 +6,5 @@ git fetch --quiet $r && \
   git stash --quiet && \
   git checkout --quiet $b && \
   git reset --quiet --hard $r/$b && \
+  git submodule update --quiet --checkout && \
   git log -1
